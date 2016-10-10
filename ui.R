@@ -18,7 +18,8 @@ shinyUI(fluidPage(
            checkboxInput('sound', 'Geluid in de omgeving'),
            checkboxInput('safetyIndex', 'Veiligheidsindex'),
            checkboxInput('parkingLots', 'Parkeerplaatsen'),
-           checkboxInput('services', 'Voorzieningen')
+           checkboxInput('services', 'Voorzieningen'),
+           selectInput('selectedDataset', 'Dataset column', choices = names(buurten))
     ),
     column(12, align="center",
            actionButton('search', 'Zoeken'))
