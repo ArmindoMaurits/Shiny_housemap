@@ -10,7 +10,9 @@ shinyServer(function(input, output) {
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1)
     
-    plotBuurtenWithColumn(buurten$veiligheidsindex_ob_norm)
+    
+    plotBuurtenWithColumn(buurten[, input$selectedDataset])
+    
     map  # Show the map
   })
   
