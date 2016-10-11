@@ -87,10 +87,10 @@ addGeoJsonFromDatasetToMap<- function(datasetName, columnName){
 
 #Loads all variables into the workspace.
 initVariables <- function(){
-  colorPalette <- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
+  colorPalette <<- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
   #To view the color palette
   #pie(rep(1, 11), col = colorPalette)
   
-  wijken <- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
-  buurten <- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
+  wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
+  buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
 }

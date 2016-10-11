@@ -19,7 +19,7 @@ shinyUI(fluidPage(
            checkboxInput('safetyIndex', 'Veiligheidsindex'),
            checkboxInput('parkingLots', 'Parkeerplaatsen'),
            checkboxInput('services', 'Voorzieningen'),
-           selectInput('selectedDataset', 'Dataset column', choices = names(buurten))
+           selectInput('selectedDataset', 'Dataset column', choices = names(buurten), selected = "veiligheidsindex_sub_norm")
     ),
     column(12, align="center",
            actionButton('search', 'Zoeken'))
