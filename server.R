@@ -8,7 +8,7 @@ shinyServer(function(input, output) {
     map <<- leaflet(data = wijken)
     map <<- addTiles(map)
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
-    map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1)
+    map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
     
     plotBuurtenWithColumn(buurten[, input$selectedDataset])
