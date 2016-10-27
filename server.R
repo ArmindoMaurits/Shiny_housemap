@@ -19,9 +19,9 @@ shinyServer(function(input, output) {
     barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
     grid(nx = 0, ny=NULL)
   })
-
+  
   output$menuLeeftijd <- renderMenu({
-      menuItem("Leeftijd",
+    menuItem("Leeftijd",
              checkboxGroupInput("age", NULL,
                                 choices = c(
                                   "Tot 15 jaar" = 1,
@@ -33,14 +33,14 @@ shinyServer(function(input, output) {
   })
   
   output$menuHerkomst <- renderMenu({
-      menuItem("Herkomst",
-               checkboxGroupInput("origin", NULL,
-                                  choices = c(
-                                    "Autochtoon" = 1,
-                                    "Allochtoon" =2
-                                  ),
-                                  selected = c(1:2)
-               ))
+    menuItem("Herkomst",
+             checkboxGroupInput("origin", NULL,
+                                choices = c(
+                                  "Autochtoon" = 1,
+                                  "Allochtoon" =2
+                                ),
+                                selected = c(1:2)
+             ))
   })
 })
 
