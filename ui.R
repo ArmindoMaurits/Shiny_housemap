@@ -5,6 +5,10 @@ library(leaflet)
 header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 
 sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("Start", tabName = "startPage", icon = icon("dashboard")),
+    menuItem("Map", tabName = "mapPage", icon = icon("dashboard"))
+  ),
   width=300,
   fluidRow(
     column(12,
