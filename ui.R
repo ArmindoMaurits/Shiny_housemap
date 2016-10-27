@@ -12,16 +12,30 @@ sidebar <- dashboardSidebar(
       selectInput('selectedDataset', 'Dataset column', choices = names(buurten), selected = "veiligheidsindex_sub_norm")
     )
   ),
-  sidebarMenu(
+  sidebarMenu(id="menu",
     menuItem("Categorien",
-             checkboxInput("age", "Leeftijd"),
-             checkboxInput("origin", "Herkomst"),
-             checkboxInput("services", "Voorzieningen"),
-             checkboxInput("schools", "Scholen"),
-             checkboxInput("publicTransport", "Openbaarvervoer"),
-             checkboxInput("safetyIndex", "Veiligheidsindex")
-    )
-  )
+             checkboxGroupInput("categories", NULL,
+                                choices = c(
+                                  "Leeftijd" ="age",
+                                  "Herkomst" = "origin",
+                                  "Voorzieningen" = "services",
+                                  "Scholen" = "schools",
+                                  "Openbaarvervoer" = "publicTransport",
+                                  "Veiligheidsindex" = "safetyIndex"
+                                ),
+                                selected= c("age", "origin")
+             )
+    ),
+    menuItemOutput("menuLeeftijd"),
+    menuItemOutput("menuHerkomst")
+  ),
+  tags$head(tags$style(HTML('
+      section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
+        padding: 5px 15px 5px 15px;
+        margin-bottom: 0px;
+      }
+    ')
+  ))
 )
 
 body <- dashboardBody(
