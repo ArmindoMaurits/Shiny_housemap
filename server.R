@@ -11,9 +11,7 @@ shinyServer(function(input, output) {
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
-    
     plotBuurtenWithColumn(buurten[, input$selectedDataset])
-    
     map  # Show the map
   })
   
@@ -52,12 +50,32 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
+# testFunction(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
+# testFunction <- function(...){
+#   tempDataFrame <<- data.frame()
+#   
+#   for(columnName in names(list(...))){
+#     iterator <- 1
+#     tempDataFrame[, columnName] <<- buurten[, columnName]
+#     #Get column
+#     # column<- buurten[, columnName]
+#     # #Get entry on index in column
+#     # entry <- column[iterator]
+#     # #Put entry in new data.frame on position of iterator
+#     # 
+#     # print(columnName)
+#   }
+#   
+# }
+
+
 #Plots all buurten with the colour of a given column from the buurten data.frame
 plotBuurtenWithColumn <- function(column){
+  wd <- getwd()
+  
   for(buurtNummer in buurten$cbs_buurtnummer){
-    buurtenFolder <- paste(getwd(), "/geojsons/buurten/", sep = "")
+    buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
     fileName <- paste(buurtNummer, ".json", sep="")
-    
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
     map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
@@ -86,10 +104,11 @@ addGeoJsonByNumberAndCategory <- function(nummer, category){
 
 #Delfshaven - http://thesaurus.erfgeo.nl/pit/?id=gemeentegeschiedenis-geometries/Delfshaven-1812
 addGeoJsonFromDatasetToMap<- function(datasetName, columnName){
+  wd <- getwd()
   
   if(datasetName == "wijken"){
     for(wijknummer in wijken$cbs_wijknummer){
-      wijkenFolder <- paste(getwd(), "/geojsons/wijken/", sep = "")
+      wijkenFolder <- paste(wd, "/geojsons/wijken/", sep = "")
       fileName <- paste(wijknummer, ".json", sep="")
       
       json <- readLines(paste(wijkenFolder, fileName, sep="")) %>% paste(collapse = "\n")
@@ -99,7 +118,7 @@ addGeoJsonFromDatasetToMap<- function(datasetName, columnName){
   }else{
     
     for(buurtNummer in buurten$cbs_buurtnummer){
-      buurtenFolder <- paste(getwd(), "/geojsons/buurten/", sep = "")
+      buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
       fileName <- paste(buurtNummer, ".json", sep="")
       
       json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
