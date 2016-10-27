@@ -2,13 +2,24 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
-header <- dashboardHeader(title = "Quality Map")
+header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 
 sidebar <- dashboardSidebar(
+  width=300,
   fluidRow(
     column(12,
       h4("Kolom"),
       selectInput('selectedDataset', 'Dataset column', choices = names(buurten), selected = "veiligheidsindex_sub_norm")
+    )
+  ),
+  sidebarMenu(
+    menuItem("Categorien",
+             checkboxInput("age", "Leeftijd"),
+             checkboxInput("origin", "Herkomst"),
+             checkboxInput("services", "Voorzieningen"),
+             checkboxInput("schools", "Scholen"),
+             checkboxInput("publicTransport", "Openbaarvervoer"),
+             checkboxInput("safetyIndex", "Veiligheidsindex")
     )
   )
 )
