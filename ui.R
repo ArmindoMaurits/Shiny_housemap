@@ -1,102 +1,113 @@
 library(shiny)
+library(shinydashboard)
 library(leaflet)
 
-shinyUI(fluidPage(
-  titlePanel(
-    "Neighbourhood Quality Map"
+header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
+
+sidebar <- dashboardSidebar(
+  width=300,
+  sidebarMenu(id="menu",
+              menuItem("Start", tabName = "startPage", icon = icon("home")),
+              menuItem("Map", tabName = "mapPage", icon = icon("map")),
+              conditionalPanel(
+                condition = "input.menu == 'mapPage'",
+                sidebarMenu(
+                  selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
+                  menuItem("Leeftijd",
+                           checkboxGroupInput("age", NULL,
+                                              choices = c(
+                                                "Tot 15 jaar" = "age_until15",
+                                                "Tussen 15 en 65 jaar" = "age_between15and65",
+                                                "Ouder dan 65 jaar" = "age_olderThan65"
+                                              ),
+                                              selected = c("age_until15", "age_olderThan65")
+                           )
+                  ),
+                  menuItem("Herkomst",
+                           checkboxGroupInput("origin", NULL,
+                                              choices = c(
+                                                "Autochtoon" = "origin_native",
+                                                "Allochtoon" ="origin_ethnicMinority"
+                                              ),
+                                              selected = c("origin_native","origin_ethnicMinority")
+                           )
+                  ),
+                  menuItem("Voorzieningen",
+                           checkboxGroupInput("services", NULL,
+                                              choices = c(
+                                                "Binnensport" = "services_insideFields",
+                                                "Sportvelden" ="services_outsideFields",
+                                                "Parkeergelegenheid" ="services_parkingLots",
+                                                "Eigen parkeerplekken" ="services_parkingLotsOwn"
+                                              )
+                           )
+                  ),
+                  menuItem("Scholen",
+                           checkboxGroupInput("schools", NULL,
+                                              choices = c(
+                                                "Basisscholen" = "schools_elementary",
+                                                "Middelbarescholen" ="schools_secundary",
+                                                "VMBO-scholen" ="schools_secundary_vmbo",
+                                                "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
+                                              )
+                           )
+                  ),
+                  menuItem("Openbaarvervoer",
+                           checkboxGroupInput("publicTransport", NULL,
+                                              choices = c(
+                                                "Aantal bushaltes" = "publicTransport_busStops",
+                                                "Aantal tramhaltes" ="publicTransport_tramStops",
+                                                "Aantal metrostations" ="publicTransport_subwayStations"
+                                              )
+                           )
+                  ),
+                  menuItem("Veiligheidsindex",
+                           checkboxGroupInput("safetyIndex", NULL,
+                                              choices = c(
+                                                "Veiligheidsindex subjectief" = "safetyIndex_subjective",
+                                                "Veiligheidsindex objectief" ="safetyIndex_objective"
+                                              )
+                           )
+                  )
+                )
+              )
   ),
-    fluidRow(
-      column(6,
-             h4("Persoonlijke informatie"),
-             selectInput("status", "Status", c("student", "werkend", "werkloos", "gepensioneerd"))
-             
-      ),
-      column(6,
-             h4("Kolom"),
-             selectInput('selectedDataset', 'Dataset column', choices = names(buurten), selected = "veiligheidsindex_sub_norm")
-      )
+  tags$head(tags$style(HTML
+                       (
+                       'section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
+                          padding: 5px 15px 5px 15px;
+                          margin-bottom: 0px;
+                        }'
+                       )
+  ))
+)
+
+body <- dashboardBody(
+  tabItems(
+    tabItem(tabName = "mapPage",
+            fluidRow(
+              tags$style(type = "text/css", "#map {height: calc(100vh - 50px) !important; margin: -15px 0px}"),
+              leafletOutput("map"),
+              absolutePanel(top = 10, right = 10, background="red",
+                            checkboxInput("legend", "Toon legenda", F)
+              )
+            )
     ),
-    checkboxInput("manual", "Handmatig filteren"),
-    conditionalPanel(
-      condition = "input.manual == true",
-      fluidRow(
-        h4("Eigenschappen"),
-        column(2,
-               checkboxInput("age", "Leeftijd"),
-               
-               conditionalPanel(
-                 condition = "input.age == true",
-                 checkboxInput("age_until15", "Tot 15 jaar", value = T),
-                 checkboxInput("age_between15and65", "Tussen 15 en 65 jaar", value = T),
-                 checkboxInput("age_olderThan15", "Ouder dan 65 jaar", value = T)
-               )
-        ),
-        column(2,
-               checkboxInput("origin", "Herkomst"),
-               conditionalPanel(
-                  condition = "input.origin == true",
-                  checkboxInput("origin_native", "Autochtoon", value = T),
-                  checkboxInput("origin_ethnicMinority", "Allochtoon", value = T)
-               )
-        ),
-        column(2,
-               checkboxInput("services", "Voorzieningen"),
-               conditionalPanel(
-                 condition = "input.services == true",
-               checkboxInput("services_insideFields", "Binnensport", value = T),
-               checkboxInput("services_outsideFields", "Sportvelden", value = T),
-               checkboxInput("services_parkingLots", "Parkeergelegenheid", value = T),
-               checkboxInput("services_parkingLotsOwn", "Eigen parkeerplek", value = T)
-               )
-        ),
-        column(2,
-               checkboxInput("schools", "Scholen"),
-               conditionalPanel(
-                 condition = "input.schools == true",
-               checkboxInput("schools_elementary", "Basisscholen", value = T),
-               checkboxInput("schools_secundary", "Middelbarescholen", value = T),
-               checkboxInput("schools_secundary_vmbo", "VMBO-scholen", value = T),
-               checkboxInput("schools_secundary_havo_vwo", "HAVO/VWO-scholen", value = T)
-               )
-        ),
-        column(2,
-               checkboxInput("publicTransport", "Openbaarvervoer"),
-               conditionalPanel(
-                 condition = "input.publicTransport == true",
-               checkboxInput("publicTransport_busStops", "Aantal bushaltes", value = T),
-               checkboxInput("publicTransport_tramStops", "Aantal tramhaltes", value = T),
-               checkboxInput("publicTransport_subwayStations", "Aantal metrostations", value = T)
-               )
-        ),
-        column(2,
-               checkboxInput("safetyIndex", "Veiligheidsindex"),
-               conditionalPanel(
-                 condition = "input.safetyIndex == true",
-               checkboxInput("safetyIndex_subjective", "Veiligheidsindex subjectief", value = T),
-               checkboxInput("safetyIndex_objective", "Veiligheidsindex", value = T) 
-               )
-        )
-      ) 
-    ),
-    hr(),
-    fluidRow(
-      column(12,
-             leafletOutput("map", width="100%", height="750px"),
-             absolutePanel(top = 10, right = 10, background="red",
-                           checkboxInput("legend", "Toon legenda", F)
-             )
-      )
-    ),
-    fluidRow(
-      column(12,
-             plotOutput("buurtenPlot")
-      )
-    ),
-    fluidRow(
-      column(12,
-             plotOutput("wijkenPlot")
-      )
+    tabItem(tabName = "startPage", 
+            h2("Startpagina"),
+            fluidRow(
+              box(title = "Kies uw profiel")
+            ),
+            fluidRow(
+              box(title = "Profiel: Alleenstaand", collapsible = T),
+              box(title = "Profiel: Student", collapsible = T),
+              box(title = "Profiel: Gezin", collapsible = T),
+              box(title = "Profiel: Gepensioneerd", collapsible = T)
+            )
     )
-  
-  
-))
+  )
+)
+
+
+
+dashboardPage(header, sidebar, body)
