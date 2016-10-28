@@ -11,7 +11,9 @@ shinyServer(function(input, output) {
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
-    plotBuurtenWithColumn(buurten[, input$selectedDataset])
+    #plotBuurtenWithColumn(buurten[, input$selectedDataset])
+    plotBuurtenWithMultipleColumns(aantal_bushaltes_norm = "aantal_bushaltes_norm", aantal_metrostations_norm = "aantal_metrostations_norm", aantal_tramhaltes_norm = "aantal_tramhaltes_norm")
+    #TODO: gebruik values van geselecteerde kolommen.
     map  # Show the map
   })
   
@@ -27,34 +29,21 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
-# selectedColumns <- c(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
-# tempDataFrame <- data.frame()
-# 
-# for(columnName in selectedColumns){
-#   print(columnName)
-#   selectedColumnFromBuurten <- buurten[, columnName]
-#   tempDataFrame[, columnName] <- selectedColumnFromBuurten
-# }
-# 
-# #testFunction(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
-# testFunction <- function(...){
-#   tempDataFrame <- data.frame()
-# 
-#   for(columnName in names(list(...))){
-#   
-#     iterator <- 1
-#     tempDataFrame[, columnName] <<- buurten[, columnName]
-#     #Get column
-#     # column<- buurten[, columnName]
-#     # #Get entry on index in column
-#     # entry <- column[iterator]
-#     # #Put entry in new data.frame on position of iterator
-#     #
-#     # print(columnName)
-#   }
-# 
-# }
-
+calculateMultipleColumns <- function(...){
+  iterator <- 1
+  
+  for(columnName in names(list(...))){
+    if(iterator == 1){
+      tempDataFrame <<- data.frame(buurten[, columnName])
+    }else{
+      tempDataFrame[, columnName] <<- buurten[, columnName]
+    }
+    iterator <- iterator+1
+  }
+  
+  tempDataFrame[, "sum"] <<- rowSums(tempDataFrame)
+  tempDataFrame[, "total"] <<- round((tempDataFrame$sum / (ncol(tempDataFrame)-1)))
+}
 
 #Plots all buurten with the colour of a given column from the buurten data.frame
 plotBuurtenWithColumn <- function(column){
@@ -65,6 +54,18 @@ plotBuurtenWithColumn <- function(column){
     fileName <- paste(buurtNummer, ".json", sep="")
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
     map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
+  }
+}
+
+plotBuurtenWithMultipleColumns <- function(...){
+  wd <- getwd()
+  calculateMultipleColumns(list(...))
+  
+  for(buurtNummer in buurten$cbs_buurtnummer){
+    buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
+    fileName <- paste(buurtNummer, ".json", sep="")
+    json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
+    map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
 
