@@ -13,12 +13,62 @@ sidebar <- dashboardSidebar(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
                   selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
-                  menuItemOutput("menuAge"),
-                  menuItemOutput("menuOrigin"),
-                  menuItemOutput("menuServices"),
-                  menuItemOutput("menuSchools"),
-                  menuItemOutput("menuPublicTransport"),
-                  menuItemOutput("menuSafetyIndex")
+                  menuItem("Leeftijd",
+                           checkboxGroupInput("age", NULL,
+                                              choices = c(
+                                                "Tot 15 jaar" = "age_until15",
+                                                "Tussen 15 en 65 jaar" = "age_between15and65",
+                                                "Ouder dan 65 jaar" = "age_olderThan65"
+                                              ),
+                                              selected = c("age_until15", "age_olderThan65")
+                           )
+                  ),
+                  menuItem("Herkomst",
+                           checkboxGroupInput("origin", NULL,
+                                              choices = c(
+                                                "Autochtoon" = "origin_native",
+                                                "Allochtoon" ="origin_ethnicMinority"
+                                              ),
+                                              selected = c("origin_native","origin_ethnicMinority")
+                           )
+                  ),
+                  menuItem("Voorzieningen",
+                           checkboxGroupInput("services", NULL,
+                                              choices = c(
+                                                "Binnensport" = "services_insideFields",
+                                                "Sportvelden" ="services_outsideFields",
+                                                "Parkeergelegenheid" ="services_parkingLots",
+                                                "Eigen parkeerplekken" ="services_parkingLotsOwn"
+                                              )
+                           )
+                  ),
+                  menuItem("Scholen",
+                           checkboxGroupInput("schools", NULL,
+                                              choices = c(
+                                                "Basisscholen" = "schools_elementary",
+                                                "Middelbarescholen" ="schools_secundary",
+                                                "VMBO-scholen" ="schools_secundary_vmbo",
+                                                "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
+                                              )
+                           )
+                  ),
+                  menuItem("Openbaarvervoer",
+                           checkboxGroupInput("publicTransport", NULL,
+                                              choices = c(
+                                                "Aantal bushaltes" = "publicTransport_busStops",
+                                                "Aantal tramhaltes" ="publicTransport_tramStops",
+                                                "Aantal metrostations" ="publicTransport_subwayStations"
+                                              )
+                           )
+                  ),
+                  menuItem("Veiligheidsindex",
+                           checkboxGroupInput("safetyIndex", NULL,
+                                              choices = c(
+                                                "Veiligheidsindex subjectief" = "safetyIndex_subjective",
+                                                "Veiligheidsindex objectief" ="safetyIndex_objective"
+                                              )
+                           )
+                  )
                 )
               )
   ),
