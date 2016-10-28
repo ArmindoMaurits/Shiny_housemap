@@ -7,8 +7,9 @@ header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 sidebar <- dashboardSidebar(
   width=300,
   sidebarMenu(id="menu",
-              menuItem("Start", tabName = "startPage", icon = icon("home")),
               menuItem("Map", tabName = "mapPage", icon = icon("map")),
+              menuItem("Start", tabName = "startPage", icon = icon("home")),
+              
               conditionalPanel(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
@@ -93,20 +94,28 @@ body <- dashboardBody(
               )
             )
     ),
-    tabItem(tabName = "startPage", 
+    tabItem(tabName = "startPage",  
             h2("Startpagina"),
             fluidRow(
-              box(title = "Kies uw profiel")
+              box(title = "Neighbourhood Quality map", solidHeader = T, status = "info","Welkom bij Neighbourhood quality map", br(), "Deze applicatie is gemaakt door...om...", br(), "het werkt zo en zo. geniet ervan Tjiwaa")
+            ),
+            fluidrow(
+              box(title - "Profiel selectie", solidHeader = T, width = 12)
+              
             ),
             fluidRow(
-              box(title = "Profiel: Alleenstaand", collapsible = T),
-              box(title = "Profiel: Student", collapsible = T),
-              box(title = "Profiel: Gezin", collapsible = T),
-              box(title = "Profiel: Gepensioneerd", collapsible = T)
+              box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, "Add text here", br(),
+                      "add more text here", br(), "even more text here"),
+              box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3),
+              box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3),
+              box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3)
+            ),
+            fluidRow(
+              box(title = "Geen profiel", collapsible = F, status = "warning", solidHeader = T, width = 3, "kies dit profiel als u zelf alle selecties en filters wilt toepassen")
             )
+              )
     )
   )
-)
 
 
 
