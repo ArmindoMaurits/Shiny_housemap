@@ -20,27 +20,73 @@ shinyServer(function(input, output) {
     grid(nx = 0, ny=NULL)
   })
   
-  output$menuLeeftijd <- renderMenu({
+  output$menuAge <- renderMenu({
     menuItem("Leeftijd",
              checkboxGroupInput("age", NULL,
                                 choices = c(
-                                  "Tot 15 jaar" = 1,
-                                  "Tussen 15 en 65 jaar" =2,
-                                  "Ouder dan 65 jaar" = 3
+                                  "Tot 15 jaar" = "age_until15",
+                                  "Tussen 15 en 65 jaar" = "age_between15and65",
+                                  "Ouder dan 65 jaar" = "age_olderThan65"
                                 ),
-                                selected = c(1:3)
-             ))
+                                selected = c("age_until15", "age_olderThan65")
+             )
+           )
   })
-  
-  output$menuHerkomst <- renderMenu({
+  output$menuOrigin <- renderMenu({
     menuItem("Herkomst",
              checkboxGroupInput("origin", NULL,
                                 choices = c(
-                                  "Autochtoon" = 1,
-                                  "Allochtoon" =2
+                                  "Autochtoon" = "origin_native",
+                                  "Allochtoon" ="origin_ethnicMinority"
                                 ),
-                                selected = c(1:2)
-             ))
+                                selected = c("origin_native","origin_ethnicMinority")
+             )
+           )
+  })
+  output$menuServices <- renderMenu({
+    menuItem("Voorzieningen",
+             checkboxGroupInput("services", NULL,
+                                choices = c(
+                                  "Binnensport" = "services_insideFields",
+                                  "Sportvelden" ="services_outsideFields",
+                                  "Parkeergelegenheid" ="services_parkingLots",
+                                  "Eigen parkeerplekken" ="services_parkingLotsOwn"
+                                )
+             )
+           )
+  })
+  output$menuSchools <- renderMenu({
+    menuItem("Scholen",
+             checkboxGroupInput("schools", NULL,
+                                choices = c(
+                                  "Basisscholen" = "schools_elementary",
+                                  "Middelbarescholen" ="schools_secundary",
+                                  "VMBO-scholen" ="schools_secundary_vmbo",
+                                  "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
+                                )
+             )
+    )
+  })
+  output$menuPublicTransport <- renderMenu({
+    menuItem("Openbaarvervoer",
+             checkboxGroupInput("publicTransport", NULL,
+                                choices = c(
+                                  "Aantal bushaltes" = "publicTransport_busStops",
+                                  "Aantal tramhaltes" ="publicTransport_tramStops",
+                                  "Aantal metrostations" ="publicTransport_subwayStations"
+                                )
+             )
+    )
+  })
+  output$menuSafetyIndex <- renderMenu({
+    menuItem("Veiligheidsindex",
+             checkboxGroupInput("safetyIndex", NULL,
+                                choices = c(
+                                  "Veiligheidsindex subjectief" = "safetyIndex_subjective",
+                                  "Veiligheidsindex objectief" ="safetyIndex_objective"
+                                )
+             )
+    )
   })
 })
 

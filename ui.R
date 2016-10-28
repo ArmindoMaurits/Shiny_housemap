@@ -26,8 +26,13 @@ sidebar <- dashboardSidebar(
                                               selected= c("age", "origin")
                            )
                   ),
-                  menuItemOutput("menuLeeftijd"),
-                  menuItemOutput("menuHerkomst")
+                  menuItemOutput("menuAge"),
+                  menuItemOutput("menuOrigin"),
+                  menuItemOutput("menuServices"),
+                  menuItemOutput("menuSchools"),
+                  menuItemOutput("menuPublicTransport"),
+                  menuItemOutput("menuSafetyIndex")
+                  
                 )
               )
   ),
@@ -51,12 +56,13 @@ body <- dashboardBody(
               )
             )
     ),
-    tabItem(tabName = "startPage", h2("Dit is een pagina in ontwikkeling"),
+    tabItem(tabName = "startPage", h2("Startpagina"),
             fluidRow(
-              box(title = "Kies uw categorie", collapsible = T),
-              box(title = "test 2", collapsible = T),
-              box(title = "test 3", collapsible = T),
-              box(title = "test 4", collapsible = T)
+              box(title = "Kies uw profiel", collapsible = T),
+              box(title = "Profiel: Alleenstaand", collapsible = T),
+              box(title = "Profiel: Student", collapsible = T),
+              box(title = "Profiel: Gezin", collapsible = T),
+              box(title = "Profiel: Gepensioneerd", collapsible = T)
             ))
   )
 )

@@ -28,7 +28,7 @@ shinyUI(fluidPage(
                condition = "input.age == true",
                checkboxInput("age_until15", "Tot 15 jaar", value = T),
                checkboxInput("age_between15and65", "Tussen 15 en 65 jaar", value = T),
-               checkboxInput("age_olderThan15", "Ouder dan 65 jaar", value = T)
+               checkboxInput("age_olderThan65", "Ouder dan 65 jaar", value = T)
              )
       ),
       column(2,
