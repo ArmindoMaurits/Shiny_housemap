@@ -49,7 +49,7 @@ body <- dashboardBody(
   tabItems(
     tabItem(tabName = "mapPage",
             fluidRow(
-              tags$style(type = "text/css", "#map {height: calc(100vh - 80px) !important;}"),
+              tags$style(type = "text/css", "#map {height: calc(100vh - 50px) !important; margin: -15px 0px}"),
               leafletOutput("map"),
               absolutePanel(top = 10, right = 10, background="red",
                             checkboxInput("legend", "Toon legenda", F)
