@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
                                 ),
                                 selected = c("age_until15", "age_olderThan65")
              )
-           )
+    )
   })
   output$menuOrigin <- renderMenu({
     menuItem("Herkomst",
@@ -41,7 +41,7 @@ shinyServer(function(input, output) {
                                 ),
                                 selected = c("origin_native","origin_ethnicMinority")
              )
-           )
+    )
   })
   output$menuServices <- renderMenu({
     menuItem("Voorzieningen",
@@ -53,7 +53,7 @@ shinyServer(function(input, output) {
                                   "Eigen parkeerplekken" ="services_parkingLotsOwn"
                                 )
              )
-           )
+    )
   })
   output$menuSchools <- renderMenu({
     menuItem("Scholen",
@@ -96,11 +96,21 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
-# testFunction(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
+# selectedColumns <- c(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
+# tempDataFrame <- data.frame()
+# 
+# for(columnName in selectedColumns){
+#   print(columnName)
+#   selectedColumnFromBuurten <- buurten[, columnName]
+#   tempDataFrame[, columnName] <- selectedColumnFromBuurten
+# }
+# 
+# #testFunction(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
 # testFunction <- function(...){
-#   tempDataFrame <<- data.frame()
-#   
+#   tempDataFrame <- data.frame()
+# 
 #   for(columnName in names(list(...))){
+#   
 #     iterator <- 1
 #     tempDataFrame[, columnName] <<- buurten[, columnName]
 #     #Get column
@@ -108,10 +118,10 @@ normalizeColumn <- function(column) {
 #     # #Get entry on index in column
 #     # entry <- column[iterator]
 #     # #Put entry in new data.frame on position of iterator
-#     # 
+#     #
 #     # print(columnName)
 #   }
-#   
+# 
 # }
 
 
