@@ -12,7 +12,7 @@ sidebar <- dashboardSidebar(
               conditionalPanel(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
-                  selectInput('selectedDataset', 'Dataset column', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
+                  selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
                   menuItem("Categoriën",
                            checkboxGroupInput("categories", NULL,
                                               choices = c(
