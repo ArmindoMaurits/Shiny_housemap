@@ -32,16 +32,16 @@ sidebar <- dashboardSidebar(
                   menuItemOutput("menuSchools"),
                   menuItemOutput("menuPublicTransport"),
                   menuItemOutput("menuSafetyIndex")
-                  
                 )
               )
   ),
-  tags$head(tags$style(HTML('
-      section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
-        padding: 5px 15px 5px 15px;
-        margin-bottom: 0px;
-      }
-    ')
+  tags$head(tags$style(HTML
+                       (
+                       'section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
+                          padding: 5px 15px 5px 15px;
+                          margin-bottom: 0px;
+                        }'
+                       )
   ))
 )
 
@@ -56,14 +56,18 @@ body <- dashboardBody(
               )
             )
     ),
-    tabItem(tabName = "startPage", h2("Startpagina"),
+    tabItem(tabName = "startPage", 
+            h2("Startpagina"),
             fluidRow(
-              box(title = "Kies uw profiel", collapsible = T),
+              box(title = "Kies uw profiel")
+            ),
+            fluidRow(
               box(title = "Profiel: Alleenstaand", collapsible = T),
               box(title = "Profiel: Student", collapsible = T),
               box(title = "Profiel: Gezin", collapsible = T),
               box(title = "Profiel: Gepensioneerd", collapsible = T)
-            ))
+            )
+    )
   )
 )
 
