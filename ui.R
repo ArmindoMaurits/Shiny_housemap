@@ -13,19 +13,6 @@ sidebar <- dashboardSidebar(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
                   selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
-                  menuItem("Categoriën",
-                           checkboxGroupInput("categories", NULL,
-                                              choices = c(
-                                                "Leeftijd" ="categories_age",
-                                                "Herkomst" = "categories_origin",
-                                                "Voorzieningen" = "categories_services",
-                                                "Scholen" = "categories_schools",
-                                                "Openbaarvervoer" = "categories_publicTransport",
-                                                "Veiligheidsindex" = "categories_safetyIndex"
-                                              ),
-                                              selected= c("categories_age", "categories_origin")
-                           )
-                  ),
                   menuItemOutput("menuAge"),
                   menuItemOutput("menuOrigin"),
                   menuItemOutput("menuServices"),
