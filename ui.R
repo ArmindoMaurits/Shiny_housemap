@@ -99,13 +99,13 @@ body <- dashboardBody(
             fluidRow(
               box(title = "Neighbourhood Quality map", solidHeader = T, status = "info","Welkom bij Neighbourhood quality map", br(), "Deze applicatie is gemaakt door...om...", br(), "het werkt zo en zo. geniet ervan Tjiwaa")
             ),
-            fluidrow(
-              box(title - "Profiel selectie", solidHeader = T, width = 12)
+            fluidRow(
+              box(title = "Profiel selectie", solidHeader = T, width = 12, status = "success" )
               
             ),
             fluidRow(
               box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, "Add text here", br(),
-                      "add more text here", br(), "even more text here"),
+                      "add more text here", br(), "even more text here", background = "light-blue"),
               box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3),
               box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3),
               box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3)
