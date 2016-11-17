@@ -106,9 +106,12 @@ body <- dashboardBody(
             fluidRow(
               box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, "Add text here", br(),
                       "add more text here", br(), "even more text here", background = "light-blue"),
-              box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3),
-              box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3),
-              box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3)
+              box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3, 
+                  checkboxGroupInput(inputId = "studentselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C"))),
+              box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3, 
+                  checkboxGroupInput(inputId = "gezinselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C"))),
+              box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3,
+                  checkboxGroupInput(inputId = "pensioenselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C")))
             ),
             fluidRow(
               box(title = "Geen profiel", collapsible = F, status = "warning", solidHeader = T, width = 3, "kies dit profiel als u zelf alle selecties en filters wilt toepassen")
