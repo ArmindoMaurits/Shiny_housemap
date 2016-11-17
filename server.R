@@ -2,7 +2,9 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+  session$onSessionEnded(stopApp)
+  
   initVariables()
   
   output$map <- renderLeaflet({
@@ -12,7 +14,8 @@ shinyServer(function(input, output) {
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
     #plotBuurtenWithColumn(buurten[, input$selectedDataset])
-    plotBuurtenWithMultipleColumns(aantal_bushaltes_norm = "aantal_bushaltes_norm", aantal_metrostations_norm = "aantal_metrostations_norm", aantal_tramhaltes_norm = "aantal_tramhaltes_norm")
+    desiredColumns <- c("aantal_bushaltes_norm", "aantal_metrostations_norm", "veiligheidsindex_sub_norm", "veiligheidsindex_ob_norm")
+    plotBuurtenWithMultipleColumns(desiredColumns)
     #TODO: gebruik values van geselecteerde kolommen.
     map  # Show the map
   })
@@ -29,10 +32,10 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
-calculateMultipleColumns <- function(...){
+calculateMultipleColumns <- function(desiredColumns){
   iterator <- 1
   
-  for(columnName in names(list(...))){
+  for(columnName in desiredColumns){
     if(iterator == 1){
       tempDataFrame <<- data.frame(buurten[, columnName])
     }else{
@@ -57,14 +60,17 @@ plotBuurtenWithColumn <- function(column){
   }
 }
 
-plotBuurtenWithMultipleColumns <- function(...){
+plotBuurtenWithMultipleColumns <- function(desiredColumns){
   wd <- getwd()
-  calculateMultipleColumns(list(...))
+  calculateMultipleColumns(desiredColumns)
+  
+  #TODO: Clear map first, otherwise GEOJSON locations will be put over the old ones.
   
   for(buurtNummer in buurten$cbs_buurtnummer){
     buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
     fileName <- paste(buurtNummer, ".json", sep="")
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
+    
     map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
@@ -123,4 +129,5 @@ initVariables <- function(){
   
   wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
   buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
+  tempDataFrame <<- data.frame()
 }
