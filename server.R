@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   initVariables()
   
   output$map <- renderLeaflet({
@@ -19,6 +19,14 @@ shinyServer(function(input, output) {
     barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
     grid(nx = 0, ny=NULL)
   })
+  
+  #onderstaande observeevent werkt nog niet. 
+  observeEvent(input$studentactie,{
+    newtab <- switch (input$menu,
+      "startPage" = "MapPage")
+    
+    updateTabItems(session,inputId = "menu", selected = "map")
+  })
 })
 
 #Normalize a given column to a range from 0 to 10
@@ -29,6 +37,8 @@ normalizeColumn <- function(column) {
 
 # selectedColumns <- c(aantal_bushaltes_norm = "aantal_bushaltes_norm", veiligheidsindex_sub_norm = "veiligheidsindex_sub_norm")
 # tempDataFrame <- data.frame()
+
+
 # 
 # for(columnName in selectedColumns){
 #   print(columnName)
