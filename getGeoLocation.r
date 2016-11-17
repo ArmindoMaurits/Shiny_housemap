@@ -27,3 +27,5 @@ for (buurtnaam in buurten$buurtnaam){
   #append the answer to the results file.
   geocoded <- rbind(geocoded, result)
 }
+
+buurten <- merge(buurten,geocoded,by="buurtnaam")

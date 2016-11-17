@@ -2,7 +2,9 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
+  session$onSessionEnded(stopApp)
+
   initVariables()
   
   output$map <- renderLeaflet({
@@ -10,8 +12,14 @@ shinyServer(function(input, output) {
     map <<- addTiles(map)
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
+    # map <<- addMarkers(map, 4,5018283, 51,899868)
     
     plotBuurtenWithColumn(buurten[, input$selectedDataset])
+
+    for (buurt in buurten$buurtnaam) {
+      map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], popup = as.character(buurt))
+    }
+
     map  # Show the map
   })
   
@@ -64,7 +72,7 @@ plotBuurtenWithColumn <- function(column){
     buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
     fileName <- paste(buurtNummer, ".json", sep="")
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-    map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
+    map <<- addGeoJSON(map, json, weight = 2, color = "grey", fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
 
@@ -72,7 +80,7 @@ plotBuurtenWithColumn <- function(column){
 #tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten$aantal_hav.vwoschool))
 #colnames(tempDataFrame) <- c("cbs_buurtnummer", "aantal_hav.vwoschool_norm")
 #buurten <- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
-#write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten.csv", sep=""), row.names = F)
+# write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten.csv", sep=""), row.names = F)
 #
 
 addGeoJsonByNumberAndCategory <- function(nummer, category){
