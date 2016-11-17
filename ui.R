@@ -106,10 +106,14 @@ body <- dashboardBody(
             fluidRow(
               box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, "Add text here", br(),
                       "add more text here", br(), "even more text here", background = "light-blue"),
+              
               box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3, 
-                  checkboxGroupInput(inputId = "studentselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C"))),
+                  checkboxGroupInput(inputId = "studentselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C")),
+                  br(), br(), "text", br(),br(), actionButton(inputId = "studentactie",label = "Ga verder met geselecteerd opties")),
+              
               box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3, 
                   checkboxGroupInput(inputId = "gezinselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C"))),
+              
               box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3,
                   checkboxGroupInput(inputId = "pensioenselect",label = "Selecteer de gewenste opties", choices = c("A", "B", "C"), selected = c("A", "B", "C")))
             ),
