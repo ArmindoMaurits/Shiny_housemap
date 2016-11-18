@@ -21,11 +21,11 @@ shinyServer(function(input, output, session) {
   })
   
   #onderstaande observeevent werkt nog niet. 
-  observeEvent(input$studentactie,{
-    newtab <- switch (input$menu,
-      "startPage" = "MapPage")
-    
-    updateTabItems(session,inputId = "menu", selected = "map")
+  observeEvent(input$noAction,{
+    selectedTab <- switch (input$menu,
+      "startPage" = "mapPage")
+    print(selectedTab)
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
 })
 

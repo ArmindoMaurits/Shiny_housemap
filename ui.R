@@ -2,11 +2,6 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
-studentprekeuze <- c("Café", "dicht bij OV", "gemiddelde leeftijd > 20 < 40", "een vierde optie")
-gezinprekeuze <- c("Dicht bij scholen", "dicht bij openbare voorzieningen", "goede OV beschikbaarheid", "kneiter dure woningen", "doe ook maar in ROtterdam")
-pensioenprekeuze <- c("doe maar kneiter hoge gemiddelde leeftijd", "winkels op rolator afstand", "dichtbij het ziekenhuis", "doe maar het mortuarium om de hoek")
-alleenprekeuze <- c("dicht bij ov", "gratis parkeren", "dicht bij winkels")
-
 header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 
 sidebar <- dashboardSidebar(
@@ -102,38 +97,46 @@ body <- dashboardBody(
     tabItem(tabName = "startPage",  
             h2("Startpagina"),
             fluidRow(
-              box(title = "Neighbourhood Quality map", solidHeader = T, status = "info","Welkom bij Neighbourhood quality map",
-                  br(), "Deze applicatie is gemaakt door...om...", br(), "het werkt zo en zo. geniet ervan Tjiwaa")
+              box(title = "Neighbourhood Quality map", solidHeader = T, 
+                  status = "info","Welkom bij Neighbourhood quality map",
+                  br(), 
+                  "Deze applicatie is gemaakt door...om...", 
+                  br(), 
+                  "het werkt zo en zo. geniet ervan Tjiwaa")
             ),
             fluidRow(
-              box(title = "Profiel selectie", solidHeader = T, width = 12, status = "success" )
-              
+              h3("Profiel selectie")
             ),
             fluidRow(
-              box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, "Add text here", br(),
-                  checkboxGroupInput(inputId = "alleenselect",label = "Selecteer de gewenste opties", choices = alleenprekeuze, selected = alleenprekeuze), height = 350,
-                  br(),br(), "text", br(),br(),actionButton(inputId = "studentactie",label = "Ga verder met mijn selectie")),
+              box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3,
+                  br(),
+                  br(),
+                  actionButton(inputId = "aloneAction", label = "Ga verder met mijn selectie")),
               
               box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3, 
-                  checkboxGroupInput(inputId = "studentselect",label = "Selecteer de gewenste opties", choices = studentprekeuze, selected = studentprekeuze),
-                  br(), br(), "text", br(),br(), actionButton(inputId = "studentactie",label = "Ga verder met mijn selectie"), height = 350),
+                  br(), 
+                  br(),
+                  actionButton(inputId = "studentAction",label = "Ga verder met mijn selectie"), height = 350),
               
               box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3, 
-                  checkboxGroupInput(inputId = "gezinselect",label = "Selecteer de gewenste opties", choices = gezinprekeuze, selected = gezinprekeuze),
-                  br(), br(), "text", br(),br(), actionButton(inputId = "gezinactie",label = "Ga verder met mijn selectie"), height = 350),
+                  br(),
+                  br(), 
+                  actionButton(inputId = "familyAction",label = "Ga verder met mijn selectie"), height = 350),
               
               box(title = "Gepensioneerd", collapsible = F, status = "warning", solidHeader = T, width = 3,
-                  checkboxGroupInput(inputId = "pensioenselect",label = "Selecteer de gewenste opties", choices = pensioenprekeuze, selected = pensioenprekeuze),
-                  br(), br(), "text", br(),br(), actionButton(inputId = "pensioenactie",label = "Ga verder met mijn selectie"), height = 350)
+                  br(),
+                  br(),
+                  actionButton(inputId = "retiredAction", label = "Ga verder met mijn selectie"), height = 350)
             ),
             fluidRow(
-              box(title = "Geen profiel", collapsible = F, status = "warning", solidHeader = T, width = 3, "kies dit profiel als u zelf alle selecties en filters wilt toepassen", 
-                  br(), br(), "text", br(),br(), actionButton(inputId = "gpactie",label = "Ja, geef mij alle keuze vrijheid"))
+              box(title = "Geen profiel", collapsible = F, status = "warning", solidHeader = T, width = 3, 
+                  "kies dit profiel als u zelf alle selecties en filters wilt toepassen", 
+                  br(),
+                  br(),
+                  actionButton(inputId = "noAction", label = "Ja, geef mij alle keuze vrijheid"))
             )
-              )
+          )
     )
   )
-
-
 
 dashboardPage(header, sidebar, body)
