@@ -4,7 +4,6 @@ library(leaflet)
 
 shinyServer(function(input, output, session) {
   session$onSessionEnded(stopApp)
-  
   initVariables()
   
   output$map <- renderLeaflet({
@@ -14,9 +13,38 @@ shinyServer(function(input, output, session) {
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
     #plotBuurtenWithColumn(buurten[, input$selectedDataset])
-    desiredColumns <- c("aantal_bushaltes_norm", "aantal_metrostations_norm", "veiligheidsindex_sub_norm", "veiligheidsindex_ob_norm")
-    plotBuurtenWithMultipleColumns(desiredColumns)
-    #TODO: gebruik values van geselecteerde kolommen.
+
+    desiredColumns <- character()
+    age <- input$age
+    origin <- input$origin
+    services <- input$services
+    schools <- input$schools
+    publicTransport <- input$publicTransport
+    safetyIndex <- input$safetyIndex
+    
+    if(!is.null(age)){
+      desiredColumns <- append(desiredColumns, age)
+    }
+    if(!is.null(origin)){
+      desiredColumns <- append(desiredColumns, origin)
+    }
+    if(!is.null(services)){
+      desiredColumns <- append(desiredColumns, services)
+    }
+    if(!is.null(schools)){
+      desiredColumns <- append(desiredColumns, schools)
+    }
+    if(!is.null(publicTransport)){
+      desiredColumns <- append(desiredColumns, publicTransport)
+    }
+    if(!is.null(safetyIndex)){
+      desiredColumns <- append(desiredColumns, safetyIndex)
+    }
+
+    if(length(desiredColumns) > 0){
+      plotBuurtenWithMultipleColumns(desiredColumns)
+    }
+    
     map  # Show the map
   })
   
@@ -63,9 +91,7 @@ plotBuurtenWithColumn <- function(column){
 plotBuurtenWithMultipleColumns <- function(desiredColumns){
   wd <- getwd()
   calculateMultipleColumns(desiredColumns)
-  
-  #TODO: Clear map first, otherwise GEOJSON locations will be put over the old ones.
-  
+
   for(buurtNummer in buurten$cbs_buurtnummer){
     buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
     fileName <- paste(buurtNummer, ".json", sep="")

@@ -16,17 +16,17 @@ sidebar <- dashboardSidebar(
                   menuItem("Leeftijd",
                            checkboxGroupInput("age", NULL,
                                               choices = c(
-                                                "Tot 15 jaar" = "age_until15",
-                                                "Tussen 15 en 65 jaar" = "age_between15and65",
-                                                "Ouder dan 65 jaar" = "age_olderThan65"
+                                                "Tot 15 jaar" = "leeftijd_tot15",
+                                                "Tussen 15 en 65 jaar" = "leeftijd_15.65",
+                                                "Ouder dan 65 jaar" = "lefetijd_van65"
                                               )
                            )
                   ),
                   menuItem("Herkomst",
                            checkboxGroupInput("origin", NULL,
                                               choices = c(
-                                                "Autochtoon" = "origin_native",
-                                                "Allochtoon" ="origin_ethnicMinority"
+                                                "Autochtoon" = "autochtoon",
+                                                "Allochtoon" ="allochtoon_w"
                                               )
                            )
                   ),
