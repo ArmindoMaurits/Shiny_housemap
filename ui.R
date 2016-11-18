@@ -16,20 +16,18 @@ sidebar <- dashboardSidebar(
                   menuItem("Leeftijd",
                            checkboxGroupInput("age", NULL,
                                               choices = c(
-                                                "Tot 15 jaar" = "age_until15",
-                                                "Tussen 15 en 65 jaar" = "age_between15and65",
-                                                "Ouder dan 65 jaar" = "age_olderThan65"
-                                              ),
-                                              selected = c("age_until15", "age_olderThan65")
+                                                "Tot 15 jaar" = "leeftijd_tot15",
+                                                "Tussen 15 en 65 jaar" = "leeftijd_15.65",
+                                                "Ouder dan 65 jaar" = "lefetijd_van65"
+                                              )
                            )
                   ),
                   menuItem("Herkomst",
                            checkboxGroupInput("origin", NULL,
                                               choices = c(
-                                                "Autochtoon" = "origin_native",
-                                                "Allochtoon" ="origin_ethnicMinority"
-                                              ),
-                                              selected = c("origin_native","origin_ethnicMinority")
+                                                "Autochtoon" = "autochtoon",
+                                                "Allochtoon" ="allochtoon_w"
+                                              )
                            )
                   ),
                   menuItem("Voorzieningen",
@@ -45,27 +43,26 @@ sidebar <- dashboardSidebar(
                   menuItem("Scholen",
                            checkboxGroupInput("schools", NULL,
                                               choices = c(
-                                                "Basisscholen" = "schools_elementary",
-                                                "Middelbarescholen" ="schools_secundary",
-                                                "VMBO-scholen" ="schools_secundary_vmbo",
-                                                "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
+                                                "Basisscholen" = "aantal_basisscholen_norm",
+                                                "VMBO-scholen" ="aantal_vmboschool_norm",
+                                                "HAVO/VWO-scholen" ="aantal_hav.vwoschool_norm"
                                               )
                            )
                   ),
                   menuItem("Openbaarvervoer",
                            checkboxGroupInput("publicTransport", NULL,
                                               choices = c(
-                                                "Aantal bushaltes" = "publicTransport_busStops",
-                                                "Aantal tramhaltes" ="publicTransport_tramStops",
-                                                "Aantal metrostations" ="publicTransport_subwayStations"
+                                                "Aantal bushaltes" = "aantal_bushaltes_norm",
+                                                "Aantal tramhaltes" ="aantal_tramhaltes_norm",
+                                                "Aantal metrostations" ="aantal_metrostations_norm"
                                               )
                            )
                   ),
                   menuItem("Veiligheidsindex",
                            checkboxGroupInput("safetyIndex", NULL,
                                               choices = c(
-                                                "Veiligheidsindex subjectief" = "safetyIndex_subjective",
-                                                "Veiligheidsindex objectief" ="safetyIndex_objective"
+                                                "Veiligheidsindex subjectief" = "veiligheidsindex_sub_norm",
+                                                "Veiligheidsindex objectief" ="veiligheidsindex_ob_norm"
                                               )
                            )
                   )
