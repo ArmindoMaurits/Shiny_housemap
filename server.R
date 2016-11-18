@@ -4,14 +4,15 @@ library(leaflet)
 
 shinyServer(function(input, output, session) {
   session$onSessionEnded(stopApp)
+
   initVariables()
   
   output$map <- renderLeaflet({
-    map <<- leaflet(data = wijken)
+    map <<- leaflet(data = buurten)
     map <<- addTiles(map)
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
-    
+
     #plotBuurtenWithColumn(buurten[, input$selectedDataset])
 
     desiredColumns <- character()
@@ -44,10 +45,21 @@ shinyServer(function(input, output, session) {
     if(length(desiredColumns) > 0){
       plotBuurtenWithMultipleColumns(desiredColumns)
     }
-    
+
+    infoIcon <- makeIcon(
+      iconUrl = "marker.png",
+      iconWidth = 30, iconHeight = 30,
+      iconAnchorX = 15, iconAnchorY = 30
+    )
+
+    for (buurt in buurten$buurtnaam) {
+      content <- paste0("<div><b>", buurt, "</b></br><p>", buurten$wijknaam[buurten$buurtnaam == buurt], "</p></div>")
+      map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], layerId=buurt, popup = content, icon = infoIcon)
+    }
+
     map  # Show the map
   })
-  
+
   output$buurtenPlot <- renderPlot({
     barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
     grid(nx = 0, ny=NULL)
@@ -84,7 +96,7 @@ plotBuurtenWithColumn <- function(column){
     buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
     fileName <- paste(buurtNummer, ".json", sep="")
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-    map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
+    map <<- addGeoJSON(map, json, weight = 2, color = "grey", fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
 
@@ -105,7 +117,7 @@ plotBuurtenWithMultipleColumns <- function(desiredColumns){
 #tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten$aantal_hav.vwoschool))
 #colnames(tempDataFrame) <- c("cbs_buurtnummer", "aantal_hav.vwoschool_norm")
 #buurten <- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
-#write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten.csv", sep=""), row.names = F)
+# write.csv(buurten, file = paste(getwd(), "/datasets/all_data_buurten.csv", sep=""), row.names = F)
 #
 
 addGeoJsonByNumberAndCategory <- function(nummer, category){
@@ -154,6 +166,6 @@ initVariables <- function(){
   #pie(rep(1, 11), col = colorPalette)
   
   wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
-  buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
+  buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ",")
   tempDataFrame <<- data.frame()
 }
