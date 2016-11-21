@@ -20,13 +20,42 @@ shinyServer(function(input, output, session) {
     grid(nx = 0, ny=NULL)
   })
   
-  #onderstaande observeevent werkt nog niet. 
-  observeEvent(input$noAction,{
+  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.  
+  observeEvent(input$studentAction,{
     selectedTab <- switch (input$menu,
       "startPage" = "mapPage")
     print(selectedTab)
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
+  
+  observeEvent(input$aloneAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    print(selectedTab)
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })  
+
+  observeEvent(input$familyAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    print(selectedTab)
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })  
+
+  observeEvent(input$retiredAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    print(selectedTab)
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })  
+  
+  observeEvent(input$noAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    print(selectedTab)
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })  
+    
 })
 
 #Normalize a given column to a range from 0 to 10
