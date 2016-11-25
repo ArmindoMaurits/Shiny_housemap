@@ -109,7 +109,7 @@ body <- dashboardBody(
             ),
             fluidRow(
               box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, height = 350,
-                  br(),"door dit profiel te kiezen worden de volgende criteria vooraf ingevuld:",
+                  br(),"door dit profiel te kiezen worden de volgende filters toegepast:",
                   br(),
                   br(),"- Veiligheidsnorm objectief",
                   br(),"- ",
@@ -123,7 +123,7 @@ body <- dashboardBody(
                   actionButton(inputId = "aloneAction", label = "Ga verder met mijn selectie")),
               
               box(title = "Student", collapsible = F, status = "warning", solidHeader = T, width = 3, 
-                  br(),"door dit profiel te kiezen worden de volgende criteria vooraf ingevuld:",
+                  br(),"door dit profiel te kiezen worden de volgende filters toegepast:",
                   br(),
                   br(), "- Veiligheidsnorm objectief",
                   br(), "- leeftijd tussen 15 en 65",
@@ -137,7 +137,7 @@ body <- dashboardBody(
                   actionButton(inputId = "studentAction",label = "Ga verder met mijn selectie"), height = 350),
               
               box(title = "Gezin", collapsible = F, status = "warning", solidHeader = T, width = 3, 
-                  br(),"door dit profiel te kiezen worden de volgende criteria vooraf ingevuld:",
+                  br(),"door dit profiel te kiezen worden de volgende filters toegepast:",
                   br(), 
                   br(),"- Veiligheidsnorm objectief",
                   br(),"- Basis- en middelbare scholen in de buurt",
