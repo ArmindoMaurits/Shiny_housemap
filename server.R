@@ -20,43 +20,32 @@ shinyServer(function(input, output, session) {
     grid(nx = 0, ny=NULL)
   })
   
-  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.  
-  observeEvent(input$studentAction,{
-    selectedTab <- switch (input$menu,
-      "startPage" = "mapPage")
-    print(selectedTab)
-    updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })
-  
-  observeEvent(input$aloneAction,{
+  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.
+  observeEvent(c(input$noAction, input$studentAction, input$aloneAction, input$familyAction, input$retiredAction),{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
-    print(selectedTab)
-    updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })  
-
-  observeEvent(input$familyAction,{
-    selectedTab <- switch (input$menu,
-                           "startPage" = "mapPage")
-    print(selectedTab)
-    updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })  
-
-  observeEvent(input$retiredAction,{
-    selectedTab <- switch (input$menu,
-                           "startPage" = "mapPage")
-    print(selectedTab)
-    updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })  
-  
-  observeEvent(input$noAction,{
-    selectedTab <- switch (input$menu,
-                           "startPage" = "mapPage")
-    print(selectedTab)
+    
+    #TODO: Fix this function with the correct parameters.
+    updateAllCheckboxInputGroups()
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })  
     
 })
+
+updateAllCheckboxInputGroups <- function(selectedProfile, session){
+  #Select the right options in the desired checkboxGroupInput
+  if(selectedProfile == "aloneAction"){
+    #TODO: set the right "selected" values on multiple checkboxGroupInput.
+    #updateCheckboxGroupInput(session, inputId, label = NULL, choices = NULL, selected = NULL, inline = FALSE)
+  }else if(selectedProfile == "studentAction"){
+    
+  }else if(selectedProfile == "familyAction"){
+    
+  }else if(selectedProfile == "retiredAction"){
+    
+  }
+  
+}
 
 #Normalize a given column to a range from 0 to 10
 normalizeColumn <- function(column) {
