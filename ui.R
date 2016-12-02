@@ -74,6 +74,24 @@ sidebar <- dashboardSidebar(
                        'section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
                           padding: 5px 15px 5px 15px;
                           margin-bottom: 0px;
+                        }
+                        .leaflet-popup {
+                          bottom: 20px !important;
+                        }
+                        table {
+                          border-collapse: collapse;
+                          width: 100%;
+                        }
+                        th {
+                          font-weight:bold;
+                        }
+                        td, th {
+                          border: 1px solid #bbbbbb;
+                          text-align: left;
+                          padding: 8px;
+                        }
+                        tr:nth-child(even) {
+                          background-color: #dddddd;
                         }'
                        )
   ))
