@@ -21,31 +21,132 @@ shinyServer(function(input, output, session) {
   })
   
   #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.
-  observeEvent(c(input$noAction, input$studentAction, input$aloneAction, input$familyAction, input$retiredAction),{
+  # observeEvent(c(input$noAction, input$studentAction, input$aloneAction, input$familyAction, input$retiredAction),{
+  #   selectedTab <- switch (input$menu,
+  #                          "startPage" = "mapPage")
+  #   
+  #   #TODO: Fix this function with the correct parameters.
+  #   updateAllCheckboxInputGroups()
+  #   updateTabItems(session,inputId = "menu", selected = selectedTab)
+  # })
+  
+  
+  
+          #No action selects. IK heb alles op Null gezet omdat als je eerst een ander profiel kiest,
+          #de selects blijven staan als je van profiel wisselt. 
+  
+  observeEvent(input$noAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     
-    #TODO: Fix this function with the correct parameters.
-    updateAllCheckboxInputGroups()
+    
+    
     updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })  
     
 })
 
-updateAllCheckboxInputGroups <- function(selectedProfile, session){
-  #Select the right options in the desired checkboxGroupInput
-  if(selectedProfile == "aloneAction"){
-    #TODO: set the right "selected" values on multiple checkboxGroupInput.
-    #updateCheckboxGroupInput(session, inputId, label = NULL, choices = NULL, selected = NULL, inline = FALSE)
-  }else if(selectedProfile == "studentAction"){
-    
-  }else if(selectedProfile == "familyAction"){
-    
-  }else if(selectedProfile == "retiredAction"){
-    
-  }
+# updateAllCheckboxInputGroups <- function(selectedProfile, session){
+#   #Select the right options in the desired checkboxGroupInput
+#   if(selectedProfile == "aloneAction"){
+#     #TODO: set the right "selected" values on multiple checkboxGroupInput.
+#     #updateCheckboxGroupInput(session, inputId, label = NULL, choices = NULL, selected = NULL, inline = FALSE)
+#   }else if(selectedProfile == "studentAction"){
+#     
+#   }else if(selectedProfile == "familyAction"){
+#     
+#   }else if(selectedProfile == "retiredAction"){
+#     
+#   }
   
-}
+  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie. 
+  
+              #studentknop selects! 
+  
+  
+  observeEvent(input$studentAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    #print(selectedTab)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = c(
+      "Tot 15 jaar" = "age_until15",
+      "Tussen 15 en 65 jaar" = "age_between15and65",
+      "Ouder dan 65 jaar" = "age_olderThan65"
+    ), selected = c("Tussen 15 en 65 jaar"), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = c(
+      "Veiligheidsindex subjectief" = "safetyIndex_subjective",
+      "Veiligheidsindex objectief" ="safetyIndex_objective"
+    ), selected = c("Veiligheidsindex objectief"), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = c(
+      "Aantal bushaltes" = "publicTransport_busStops",
+      "Aantal tramhaltes" ="publicTransport_tramStops",
+      "Aantal metrostations" ="publicTransport_subwayStations"
+    ), selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })
+  
+  
+          #Aloneknop selects!
+  
+  
+  observeEvent(input$aloneAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    #print(selectedTab)
+    
+    
+    
+    
+    
+    
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })  
+  
+        #Familyknop selects! 
+  
+  observeEvent(input$familyAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    #print(selectedTab)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = c(
+      "Tot 15 jaar" = "age_until15",
+      "Tussen 15 en 65 jaar" = "age_between15and65",
+      "Ouder dan 65 jaar" = "age_olderThan65"
+    ), selected = c("Tussen 15 en 65 jaar", "Tot 15 jaar"), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = c(
+      "Veiligheidsindex subjectief" = "safetyIndex_subjective",
+      "Veiligheidsindex objectief" ="safetyIndex_objective"
+    ), selected = c("Veiligheidsindex objectief"), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = c(
+      "Basisscholen" = "schools_elementary",
+      "Middelbarescholen" ="schools_secundary",
+      "VMBO-scholen" ="schools_secundary_vmbo",
+      "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
+    ), selected = c("Basisscholen", "Middelbarescholen"), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = c(
+      "Binnensport" = "services_insideFields",
+      "Sportvelden" ="services_outsideFields",
+      "Parkeergelegenheid" ="services_parkingLots",
+      "Eigen parkeerplekken" ="services_parkingLotsOwn"
+    ), selected = c("Binnensport", "Sportvelden"), inline = FALSE)
+    
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })    
+  
+    
+      #Nochoises selects 
+  
+  
+  
+  
+})
 
 #Normalize a given column to a range from 0 to 10
 normalizeColumn <- function(column) {

@@ -21,7 +21,7 @@ sidebar <- dashboardSidebar(
                                                 "Tussen 15 en 65 jaar" = "age_between15and65",
                                                 "Ouder dan 65 jaar" = "age_olderThan65"
                                               ),
-                                              selected = c("age_until15", "age_olderThan65")
+                                              selected = NULL
                            )
                   ),
                   menuItem("Herkomst",
@@ -30,7 +30,7 @@ sidebar <- dashboardSidebar(
                                                 "Autochtoon" = "origin_native",
                                                 "Allochtoon" ="origin_ethnicMinority"
                                               ),
-                                              selected = c("origin_native","origin_ethnicMinority")
+                                              selected = NULL
                            )
                   ),
                   menuItem("Voorzieningen",
