@@ -39,8 +39,6 @@ shinyServer(function(input, output, session) {
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     
-    
-    
     updateTabItems(session,inputId = "menu", selected = selectedTab)
     
 })
@@ -111,30 +109,17 @@ shinyServer(function(input, output, session) {
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     #print(selectedTab)
-    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = c(
-      "Tot 15 jaar" = "age_until15",
-      "Tussen 15 en 65 jaar" = "age_between15and65",
-      "Ouder dan 65 jaar" = "age_olderThan65"
-    ), selected = c("Tussen 15 en 65 jaar", "Tot 15 jaar"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+    , selected = c("Tussen 15 en 65 jaar", "Tot 15 jaar"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = c(
-      "Veiligheidsindex subjectief" = "safetyIndex_subjective",
-      "Veiligheidsindex objectief" ="safetyIndex_objective"
-    ), selected = c("Veiligheidsindex objectief"), inline = FALSE)
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
+    , selected = c("Veiligheidsindex objectief"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = c(
-      "Basisscholen" = "schools_elementary",
-      "Middelbarescholen" ="schools_secundary",
-      "VMBO-scholen" ="schools_secundary_vmbo",
-      "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
-    ), selected = c("Basisscholen", "Middelbarescholen"), inline = FALSE)
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = schoolBoxChoices
+    , selected = c("Basisscholen", "Middelbarescholen"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = c(
-      "Binnensport" = "services_insideFields",
-      "Sportvelden" ="services_outsideFields",
-      "Parkeergelegenheid" ="services_parkingLots",
-      "Eigen parkeerplekken" ="services_parkingLotsOwn"
-    ), selected = c("Binnensport", "Sportvelden"), inline = FALSE)
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+    , selected = c("Binnensport", "Sportvelden"), inline = FALSE)
     
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)

@@ -4,6 +4,19 @@ library(leaflet)
 
 header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 
+ageBoxChoices <- c("Tot 15 jaar" = "age_until15","Tussen 15 en 65 jaar" = "age_between15and65",
+                      "Ouder dan 65 jaar" = "age_olderThan65")
+originBoxChoices <- c("Autochtoon" = "origin_native", "Allochtoon" ="origin_ethnicMinority")
+servicesBoxChoices <- c("Binnensport" = "services_insideFields","Sportvelden" ="services_outsideFields",
+                         "Parkeergelegenheid" ="services_parkingLots","Eigen parkeerplekken" ="services_parkingLotsOwn")
+schoolBoxChoices <- c("Basisscholen" = "schools_elementary","Middelbarescholen" ="schools_secundary",
+                      "VMBO-scholen" ="schools_secundary_vmbo","HAVO/VWO-scholen" ="schools_secundary_havo_vwo")
+publicTransportBoxChoices <- c( "Aantal bushaltes" = "publicTransport_busStops","Aantal tramhaltes" ="publicTransport_tramStops",
+                                "Aantal metrostations" ="publicTransport_subwayStations")
+safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "safetyIndex_subjective", "Veiligheidsindex objectief" ="safetyIndex_objective")
+                           
+
+
 sidebar <- dashboardSidebar(
   width=300,
   sidebarMenu(id="menu",
@@ -16,63 +29,50 @@ sidebar <- dashboardSidebar(
                   selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
                   menuItem("Leeftijd",
                            checkboxGroupInput("age", NULL,
-                                              choices = c(
-                                                "Tot 15 jaar" = "age_until15",
-                                                "Tussen 15 en 65 jaar" = "age_between15and65",
-                                                "Ouder dan 65 jaar" = "age_olderThan65"
-                                              ),
+                                              choices = ageBoxChoices
+                                              ,
                                               selected = NULL
                            )
                   ),
                   menuItem("Herkomst",
                            checkboxGroupInput("origin", NULL,
-                                              choices = c(
-                                                "Autochtoon" = "origin_native",
-                                                "Allochtoon" ="origin_ethnicMinority"
-                                              ),
+                                              choices = originBoxChoices
+                                              ,
                                               selected = NULL
                            )
                   ),
                   menuItem("Voorzieningen",
                            checkboxGroupInput("services", NULL,
-                                              choices = c(
-                                                "Binnensport" = "services_insideFields",
-                                                "Sportvelden" ="services_outsideFields",
-                                                "Parkeergelegenheid" ="services_parkingLots",
-                                                "Eigen parkeerplekken" ="services_parkingLotsOwn"
-                                              )
+                                              choices = servicesBoxChoices
+                                              ,
+                                              selected = NULL
                            )
                   ),
                   menuItem("Scholen",
                            checkboxGroupInput("schools", NULL,
-                                              choices = c(
-                                                "Basisscholen" = "schools_elementary",
-                                                "Middelbarescholen" ="schools_secundary",
-                                                "VMBO-scholen" ="schools_secundary_vmbo",
-                                                "HAVO/VWO-scholen" ="schools_secundary_havo_vwo"
-                                              )
+                                              choices = schoolBoxChoices
+                                              ,
+                                              selected = NULL
                            )
                   ),
                   menuItem("Openbaarvervoer",
                            checkboxGroupInput("publicTransport", NULL,
-                                              choices = c(
-                                                "Aantal bushaltes" = "publicTransport_busStops",
-                                                "Aantal tramhaltes" ="publicTransport_tramStops",
-                                                "Aantal metrostations" ="publicTransport_subwayStations"
-                                              )
+                                              choices = publicTransportBoxChoices
+                                              ,
+                                              selected = NULL
                            )
                   ),
                   menuItem("Veiligheidsindex",
                            checkboxGroupInput("safetyIndex", NULL,
-                                              choices = c(
-                                                "Veiligheidsindex subjectief" = "safetyIndex_subjective",
-                                                "Veiligheidsindex objectief" ="safetyIndex_objective"
+                                              choices = safetyIndexBoxChoices
+                                              ,
+                                              selected = NULL
                                               )
                            )
                   )
                 )
               )
-  ),
+  )
   tags$head(tags$style(HTML
                        (
                        'section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
@@ -81,7 +81,7 @@ sidebar <- dashboardSidebar(
                         }'
                        )
   ))
-)
+
 
 body <- dashboardBody(
   tabItems(
