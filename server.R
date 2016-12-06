@@ -74,6 +74,21 @@ shinyServer(function(input, output, session) {
     updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices
     , selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
     
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = schoolBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "origin", label = "Herkomst",  choices = originBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+
+    
+                    
+    
+    
+    
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
   
@@ -86,19 +101,26 @@ shinyServer(function(input, output, session) {
                            "startPage" = "mapPage")
     #print(selectedTab)
     updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
-                             , selected = ageBoxChoices[2], inline = FALSE)
+                             , selected = c("Ouder dan 65 jaar"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
-    , selected = c(safetyIndexBoxChoices[1], safetyIndexBoxChoices[2]), inline = FALSE)
+                             , selected = c("Veiligheidsindex subjectief", "Veiligheidsindex objectief"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices
-    , selected = c(publicTransportBoxChoices), inline = FALSE)
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+                             , selected = c("Binnensport","Parkeergelegenheid","Eigen parkeerplekken"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "services", label = "Voorzieningen", choises = servicesBoxChoices
-    , selected = c(servicesBoxChoices[1], servicesBoxChoices[3],servicesBoxChoices[4]), inline = FALSE)
+    updateCheckboxGroupInput(session, "origin", label = "Herkomst",  choices = originBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer",  choices = publicTransportBoxChoices
+                             , selected = publicTransportBoxChoices, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = schoolBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })
+  })    
   
   
           #Aloneknop selects!
@@ -111,13 +133,26 @@ shinyServer(function(input, output, session) {
     updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
                              , selected = c("Tussen 15 en 65 jaar", "Tot 15 jaar"), inline = FALSE)
     
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
+                             , selected = c("Veiligheidsindex objectief"), inline = FALSE)
+
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = schoolBoxChoices
+                             , selected = NULL, inline = FALSE)
     
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+                             , selected = NULL, inline = FALSE)
     
+    updateCheckboxGroupInput(session, "origin", label = "Herkomst",  choices = originBoxChoices
+                             , selected = NULL, inline = FALSE)
     
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer",  choices = publicTransportBoxChoices
+                             , selected = publicTransportBoxChoices, inline = FALSE)
     
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })  
+  })    
+  
+
   
         #Familyknop selects! 
   
@@ -137,12 +172,43 @@ shinyServer(function(input, output, session) {
     updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
     , selected = c("Binnensport", "Sportvelden"), inline = FALSE)
     
+    updateCheckboxGroupInput(session, "origin", label = "Herkomst",  choices = originBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer",  choices = publicTransportBoxChoices
+                             , selected = NULL, inline = FALSE)
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })    
   
     
       #Nochoises selects 
+  
+  observeEvent(input$noAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    #print(selectedTab)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "schools", label = "Scholen",  choices = schoolBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "origin", label = "Herkomst",  choices = originBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer",  choices = publicTransportBoxChoices
+                             , selected = NULL, inline = FALSE)
+    
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })    
   
   
   
