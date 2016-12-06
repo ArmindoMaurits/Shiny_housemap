@@ -65,22 +65,37 @@ shinyServer(function(input, output, session) {
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     #print(selectedTab)
-    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = c(
-      "Tot 15 jaar" = "age_until15",
-      "Tussen 15 en 65 jaar" = "age_between15and65",
-      "Ouder dan 65 jaar" = "age_olderThan65"
-    ), selected = c("Tussen 15 en 65 jaar"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+    , selected = c("Tussen 15 en 65 jaar"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = c(
-      "Veiligheidsindex subjectief" = "safetyIndex_subjective",
-      "Veiligheidsindex objectief" ="safetyIndex_objective"
-    ), selected = c("Veiligheidsindex objectief"), inline = FALSE)
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices 
+    , selected = c("Veiligheidsindex objectief"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = c(
-      "Aantal bushaltes" = "publicTransport_busStops",
-      "Aantal tramhaltes" ="publicTransport_tramStops",
-      "Aantal metrostations" ="publicTransport_subwayStations"
-    ), selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices
+    , selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })
+  
+  
+        #gepensioneerd selects! 
+  
+  
+  observeEvent(input$retiredAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    #print(selectedTab)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+                             , selected = ageBoxChoices[2], inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
+    , selected = c(safetyIndexBoxChoices[1], safetyIndexBoxChoices[2]), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices
+    , selected = c(publicTransportBoxChoices), inline = FALSE)
+    
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen", choises = servicesBoxChoices
+    , selected = c(servicesBoxChoices[1], servicesBoxChoices[3],servicesBoxChoices[4]), inline = FALSE)
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
@@ -92,8 +107,9 @@ shinyServer(function(input, output, session) {
   observeEvent(input$aloneAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
-    #print(selectedTab)
     
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+                             , selected = c("Tussen 15 en 65 jaar", "Tot 15 jaar"), inline = FALSE)
     
     
     
