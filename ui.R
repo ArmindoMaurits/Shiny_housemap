@@ -104,9 +104,9 @@ body <- dashboardBody(
                   br(), 
                   "het werkt zo en zo. geniet ervan Tjiwaa")
             ),
-            fluidRow(
+           
               h3("Profiel selectie")
-            ),
+            ,
             fluidRow(
               box(title = "Alleenstaand", collapsible = F, status = "warning", solidHeader = T, width = 3, height = 350,
                   br(),"door dit profiel te kiezen worden de volgende filters toegepast:",
