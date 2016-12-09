@@ -95,7 +95,7 @@ body <- dashboardBody(
                   willen verzamelen over de buurt waarin zij terecht gaan komen.", br(), "Uiteraard kan deze applicatie ook gebruikt worden
                   om meer informatie over je eigen wijk op te zoeken",
                   br(), 
-                  "het werkt zo en zo. geniet ervan Tjiwaa")
+                  text("het werkt zo en zo. geniet ervan Tjiwaa", font = 2)
             ),
            
               h3("Profiel selectie")
