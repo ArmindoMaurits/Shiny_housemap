@@ -2,9 +2,9 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
+source('global.R')
+
 shinyServer(function(input, output, session) {
-  initVariables()
-  
   output$map <- renderLeaflet({
     map <<- leaflet(data = wijken)
     map <<- addTiles(map)
@@ -32,24 +32,20 @@ shinyServer(function(input, output, session) {
   
   
   #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie en het aanvinken van de pre-set checkboxes. 
-  
-              #studentknop selects! 
-  
-  
   observeEvent(input$studentAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     
     resetCheckboxes(session)
     
-    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
-    , selected = c("Tussen 15 en 65 jaar"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices, 
+                             selected = c("Tussen 15 en 65 jaar"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices 
-    , selected = c("Veiligheidsindex objectief"), inline = FALSE)
+    updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices, 
+                             selected = c("Veiligheidsindex objectief"), inline = FALSE)
     
-    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices
-    , selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
+    updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices, 
+                             selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
     
   
     updateTabItems(session,inputId = "menu", selected = selectedTab)
@@ -79,10 +75,6 @@ shinyServer(function(input, output, session) {
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })    
   
-  
-          #Aloneknop selects!
-  
-  
   observeEvent(input$aloneAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
@@ -101,9 +93,6 @@ shinyServer(function(input, output, session) {
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })    
-  
-
-        #Familyknop selects! 
   
   observeEvent(input$familyAction,{
     selectedTab <- switch (input$menu,
@@ -126,9 +115,6 @@ shinyServer(function(input, output, session) {
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })    
   
-    
-      #Nochoises selects 
-  
   observeEvent(input$noAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
@@ -137,15 +123,11 @@ shinyServer(function(input, output, session) {
     
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
-  })    
-  
-  
-  
+  })
   
 })
 
 resetCheckboxes <- function(session){
-  
   updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
                            , selected = NULL, inline = FALSE)
   
@@ -258,14 +240,4 @@ addGeoJsonFromDatasetToMap<- function(datasetName, columnName){
       map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[buurten$veiligheidsindex_sub_norm[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[buurten$veiligheidsindex_sub_norm[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
     }
   }
-}
-
-#Loads all variables into the workspace.
-initVariables <- function(){
-  colorPalette <<- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
-  #To view the color palette
-  #pie(rep(1, 11), col = colorPalette)
-  
-  wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
-  buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
 }
