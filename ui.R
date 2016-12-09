@@ -15,7 +15,6 @@ sidebar <- dashboardSidebar(
               conditionalPanel(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
-                  selectInput('selectedDataset', 'Selecteer data', choices = names(buurten), selected = "veiligheidsindex_sub_norm"),
                   menuItem("Leeftijd",
                            checkboxGroupInput("age", NULL,
                                               choices = ageBoxChoices
