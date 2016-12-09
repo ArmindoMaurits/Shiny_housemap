@@ -5,12 +5,16 @@ buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), s
 
 ageBoxChoices <- c("Tot 15 jaar" = "age_until15","Tussen 15 en 65 jaar" = "age_between15and65",
                    "Ouder dan 65 jaar" = "age_olderThan65")
+
 originBoxChoices <- c("Autochtoon" = "origin_native", "Allochtoon" ="origin_ethnicMinority")
+
 servicesBoxChoices <- c("Binnensport" = "services_insideFields","Sportvelden" ="services_outsideFields",
-                        "Parkeergelegenheid" ="services_parkingLots","Eigen parkeerplekken" ="services_parkingLotsOwn")
+                        "Parkeergelegenheid" ="services_parkingLots","Eigen parkeerplekken" ="services_parkingLotsOwn", "Internetsnelheid" = "internetsnelheid", "WOZ waarde" = "wozwaarde")
+
 schoolBoxChoices <- c("Basisscholen" = "schools_elementary","Middelbarescholen" ="schools_secundary",
                       "VMBO-scholen" ="schools_secundary_vmbo","HAVO/VWO-scholen" ="schools_secundary_havo_vwo")
+
 publicTransportBoxChoices <- c( "Aantal bushaltes" = "publicTransport_busStops","Aantal tramhaltes" ="publicTransport_tramStops",
                                 "Aantal metrostations" ="publicTransport_subwayStations")
-safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "safetyIndex_subjective", "Veiligheidsindex objectief" ="safetyIndex_objective")
 
+safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "safetyIndex_subjective", "Veiligheidsindex objectief" ="safetyIndex_objective")

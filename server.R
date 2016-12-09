@@ -47,6 +47,8 @@ shinyServer(function(input, output, session) {
     updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer", choices = publicTransportBoxChoices, 
                              selected = c("Aantal bushaltes", "Aantal tramhaltes", "Aantal metrostations"), inline = FALSE)
     
+    updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
+                             , selected = c("Internetsnelheid"), inline = FALSE)
   
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
@@ -67,7 +69,7 @@ shinyServer(function(input, output, session) {
                              , selected = c("Veiligheidsindex subjectief", "Veiligheidsindex objectief"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
-                             , selected = c("Binnensport","Parkeergelegenheid","Eigen parkeerplekken"), inline = FALSE)
+                             , selected = c("Binnensport","Parkeergelegenheid","Eigen parkeerplekken", "WOZ waarde"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "publicTransport", label = "Openbaarvervoer",  choices = publicTransportBoxChoices
                              , selected = publicTransportBoxChoices, inline = FALSE)
@@ -110,7 +112,7 @@ shinyServer(function(input, output, session) {
     , selected = c("Basisscholen", "Middelbarescholen"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "services", label = "Voorzieningen",  choices = servicesBoxChoices
-    , selected = c("Binnensport", "Sportvelden"), inline = FALSE)
+    , selected = c("Binnensport", "Sportvelden", "WOZ waarde"), inline = FALSE)
 
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })    
