@@ -41,7 +41,6 @@ shinyServer(function(input, output, session) {
     }
 
     if(length(desiredColumns) > 0){
-      print(desiredColumns)
       plotBuurtenWithMultipleColumns(desiredColumns)
       
     }
