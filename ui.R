@@ -9,8 +9,8 @@ header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 sidebar <- dashboardSidebar(
   width=300,
   sidebarMenu(id="menu",
-              menuItem("Map", tabName = "mapPage", icon = icon("map")),
               menuItem("Start", tabName = "startPage", icon = icon("home")),
+              menuItem("Map", tabName = "mapPage", icon = icon("map")),
               
               conditionalPanel(
                 condition = "input.menu == 'mapPage'",
@@ -74,15 +74,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "mapPage",
-            fluidRow(
-              tags$style(type = "text/css", "#map {height: calc(100vh - 50px) !important; margin: -15px 0px}"),
-              leafletOutput("map"),
-              absolutePanel(top = 10, right = 10, background="red",
-                            checkboxInput("legend", "Toon legenda", F)
-              )
-            )
-    ),
+ 
     tabItem(tabName = "startPage",  
             h2("Startpagina"),
             fluidRow(
@@ -94,9 +86,10 @@ body <- dashboardBody(
                   br(), "De beoogde doelgroep van deze applicatie zijn mensen die op zoek zijn naar een nieuwe woning en meer informatie
                   willen verzamelen over de buurt waarin zij terecht gaan komen.", br(), "Uiteraard kan deze applicatie ook gebruikt worden
                   om meer informatie over je eigen wijk op te zoeken",
-                  br(), 
-                  text("het werkt zo en zo. geniet ervan Tjiwaa", font = 2)
-            ),
+                  br(), "Hieronder zijn voor u reeds een aantal profielen samengesteld. U kunt een profiel kiezen waarmee enkele filters 
+                       voor u aangezet worden. U kunt ook kiezen voor de optie 'geen profiel' om direct vanaf het begin alle filters zelf 
+                  toe te kunnen passen"
+            )),
            
               h3("Profiel selectie")
             ,
@@ -105,8 +98,8 @@ body <- dashboardBody(
                   br(),"door dit profiel te kiezen worden de volgende filters toegepast:",
                   br(),
                   br(),"- Veiligheidsnorm objectief",
-                  br(),"- ",
-                  br(),
+                  br(),"- Leeftijd tot 65 jaar",
+                  br(),"- Openbaar vervoe in de buurt",
                   br(),
                   br(),
                   br(),
@@ -166,7 +159,16 @@ body <- dashboardBody(
                   br(),
                   actionButton(inputId = "noAction", label = "Ja, geef mij alle keuze vrijheid"))
             )
-          )
+          ),
+    tabItem(tabName = "mapPage",
+            fluidRow(
+              tags$style(type = "text/css", "#map {height: calc(100vh - 50px) !important; margin: -15px 0px}"),
+              leafletOutput("map"),
+              absolutePanel(top = 10, right = 10, background="red",
+                            checkboxInput("legend", "Toon legenda", F)
+              )
+            )
+        )
     )
   )
 
