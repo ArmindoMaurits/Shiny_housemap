@@ -88,8 +88,12 @@ body <- dashboardBody(
             fluidRow(
               box(title = "Neighbourhood Quality map", solidHeader = T, 
                   status = "info","Welkom bij Neighbourhood quality map",
-                  br(), 
-                  "Deze applicatie is gemaakt door...om...", 
+                  br(),br(), 
+                  "Deze applicatie is gemaakt door studenten aan de minor DataScience met het doel om de kwaliteit van buurten
+                  in Nederland (momenteel alleen rotterdam) in kaart te brengen door gebruik te maken van diverse publiekelijk beschikbare datasets", 
+                  br(), "De beoogde doelgroep van deze applicatie zijn mensen die op zoek zijn naar een nieuwe woning en meer informatie
+                  willen verzamelen over de buurt waarin zij terecht gaan komen.", br(), "Uiteraard kan deze applicatie ook gebruikt worden
+                  om meer informatie over je eigen wijk op te zoeken",
                   br(), 
                   "het werkt zo en zo. geniet ervan Tjiwaa")
             ),
