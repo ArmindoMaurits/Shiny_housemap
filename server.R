@@ -45,14 +45,112 @@ shinyServer(function(input, output, session) {
       
     }
 
-    infoIcon <- makeIcon(
-      iconUrl = "marker.png",
-      iconWidth = 30, iconHeight = 30,
-      iconAnchorX = 15, iconAnchorY = 30
-    )
-
     for (buurt in buurten$buurtnaam) {
-      content <- paste0("<div><b>", buurt, "</b></br><p>", buurten$wijknaam[buurten$buurtnaam == buurt], "</p></div>")
+      content <- paste0('<div style="width: 250px;">
+                          <h4>', buurt,' - ',buurten$wijknaam[buurten$buurtnaam == buurt],'</h4>
+                          <table style="width:100%">
+                            <tr>
+                              <th>Onderwerp</th>
+                              <th>Score</th>
+                            </tr>
+                            <tr>
+                              <td>Leeftijd tot 15 jaar</td>
+                              <td>',buurten$leeftijd_tot15[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Leeftijd van 15 tot 65 jaar</td>
+                              <td>',buurten$leeftijd_15.65[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Leeftijd vanaf 65 jaar</td>
+                              <td>',buurten$leeftijd_van65[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Autochtoon</td>
+                              <td>',buurten$autochtoon[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Allochtoon en werkende</td>
+                              <td>',buurten$allochtoon_w[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Allochtoon en niet-werkende</td>
+                              <td>',buurten$allochtoon_nw[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid binnensport</td>
+                              <td>',buurten$aanwezigheid_binnensport[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid sportveld</td>
+                              <td>',buurten$aanwezigheid_sportveld[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid basisscholen</td>
+                              <td>',buurten$aanwezigheid_basisscholen[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal basischolen</td>
+                              <td>',buurten$aantal_basisscholen[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid middelbarescholen</td>
+                              <td>',buurten$aanwezigheid_middelbarescholen[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal vmbo scholen</td>
+                              <td>',buurten$aantal_vmboschool[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal havo/vwo scholen</td>
+                              <td>',buurten$aantal_hav.vwoschool[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid parkeergelegenheid</td>
+                              <td>',buurten$aanwezigheid_parkeergelegenheid[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid eigen parkeerplaats</td>
+                              <td>',buurten$aanwezigheid_eigenparkeerpl[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aanwezigheid openbaar vervoer</td>
+                              <td>',buurten$aanwezigheid_ov[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal bushaltes</td>
+                              <td>',buurten$aantal_bushaltes[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal bushaltes binnen de norm afstand</td>
+                              <td>',buurten$norm_bushalte[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal tramhaltes</td>
+                              <td>',buurten$aantal_tramhaltes[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal tramhaltes binnen de norm afstand</td>
+                              <td>',buurten$norm_tramhalte[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal metrostations</td>
+                              <td>',buurten$aantal_metrostations[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Aantal metrostations binnen de norm afstand</td>
+                              <td>',buurten$norm_metrostation[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Veiligheids index subjectief</td>
+                              <td>',buurten$veiligheidsindex_sub[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                            <tr>
+                              <td>Veiligheids index objectief</td>
+                              <td>',buurten$veiligheidsindex_ob[buurten$buurtnaam == buurt],'</td>
+                            </tr>
+                          </table>
+                        </div>')
       map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], layerId=buurt, popup = content, icon = infoIcon)
     }
 
@@ -166,5 +264,4 @@ shinyServer(function(input, output, session) {
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
-  
 })

@@ -7,6 +7,9 @@ source('global.R')
 header <- dashboardHeader(titleWidth=300, title = "Neighbourhood Quality Map")
 
 sidebar <- dashboardSidebar(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+  ),
   width=300,
   sidebarMenu(id="menu",
               menuItem("Start", tabName = "startPage", icon = icon("home")),
@@ -61,14 +64,6 @@ sidebar <- dashboardSidebar(
                 )
               )
   )
-  tags$head(tags$style(HTML
-                       (
-                       'section.sidebar .shiny-input-container.shiny-input-checkboxgroup {
-                          padding: 5px 15px 5px 15px;
-                          margin-bottom: 0px;
-                        }'
-                       )
-  ))
 
 
 body <- dashboardBody(

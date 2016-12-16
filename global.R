@@ -3,6 +3,12 @@ colorPalette <<- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','
 wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
 buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
 
+infoIcon <- makeIcon(
+  iconUrl = "marker.png",
+  iconWidth = 30, iconHeight = 30,
+  iconAnchorX = 15, iconAnchorY = 30
+)
+
 ageBoxChoices <- c("Tot 15 jaar" = "leeftijd_tot15_norm",
                    "Tussen 15 en 65 jaar" = "leeftijd_15.65_norm",
                    "Ouder dan 65 jaar" = "leeftijd_van65_norm")
