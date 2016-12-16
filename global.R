@@ -18,3 +18,9 @@ publicTransportBoxChoices <- c( "Aantal bushaltes" = "aantal_bushaltes_norm","Aa
                                 "Aantal metrostations" ="aantal_metrostations_norm")
 
 safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "veiligheidsindex_sub_norm", "Veiligheidsindex objectief" ="veiligheidsindex_ob_norm")
+
+infoIcon <- makeIcon(
+  iconUrl = "marker.png",
+  iconWidth = 30, iconHeight = 30,
+  iconAnchorX = 15, iconAnchorY = 30
+)

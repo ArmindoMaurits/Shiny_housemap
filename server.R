@@ -45,12 +45,6 @@ shinyServer(function(input, output, session) {
       
     }
 
-    infoIcon <- makeIcon(
-      iconUrl = "marker.png",
-      iconWidth = 30, iconHeight = 30,
-      iconAnchorX = 15, iconAnchorY = 30
-    )
-
     for (buurt in buurten$buurtnaam) {
       content <- paste0('<div style="width: 250px;">
                           <h4>', buurt,' - ',buurten$wijknaam[buurten$buurtnaam == buurt],'</h4>
