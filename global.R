@@ -140,6 +140,6 @@ plotBuurtenWithMultipleColumns <- function(desiredColumns){
     fileName <- paste(buurtNummer, ".json", sep="")
     json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
     
-    map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
+    map <<- addGeoJSON(map, json, weight = 2, color = 'gray', fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
