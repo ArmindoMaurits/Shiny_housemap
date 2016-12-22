@@ -265,3 +265,18 @@ shinyServer(function(input, output, session) {
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
 })
+
+
+
+
+
+
+
+          #Dataset 2014 bouwen 
+data2014 <- read.csv("C://Users//Robbin Berger//Documents//GitHub//Shiny_housemap//datasets//all_data_buurten_2014.csv", sep = ";")
+data2016 <- read.csv("C://Users//Robbin Berger//Documents//GitHub//Shiny_housemap//datasets//all_data_buurten_2016.csv", sep = ";")
+
+edit(data2016)
+
+
+write.csv(data2014, "C://Users//Robbin Berger//Documents//GitHub//Shiny_housemap//datasets//all_data_buurten_2014.csv", sep = ",", quote = F)
