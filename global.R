@@ -143,3 +143,5 @@ plotBuurtenWithMultipleColumns <- function(desiredColumns){
     map <<- addGeoJSON(map, json, weight = 2, color = 'gray', fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
   }
 }
+
+test <- "test"
