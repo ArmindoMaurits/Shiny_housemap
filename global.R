@@ -1,4 +1,6 @@
 #global.R - Global defined variables.
+library(leaflet)
+
 colorPalette <<- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
 wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
 buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
@@ -8,6 +10,26 @@ infoIcon <- makeIcon(
   iconWidth = 30, iconHeight = 30,
   iconAnchorX = 15, iconAnchorY = 30
 )
+
+columnNames <- list("leeftijd_tot15_norm"="Tot 15 jaar",
+                     "leeftijd_15.65_norm"="Tussen 15 en 65 jaar",
+                     "leeftijd_van65_norm"="Ouder dan 65 jaar",
+                     "autochtoon_norm" = "Autochtoon",
+                     "allochtoon_w_norm" ="Allochtoon",
+                     "aanwezigheid_binnensport_norm" = "Aanwezigheid binnensport",
+                     "aanwezigheid_sportveld_norm" ="Aanwezigheid sprotvelden",
+                     "aanwezigheid_parkeergelegenheid_norm" ="Aanwezigheid parkeergelegenheid",
+                     "aanwezigheid_eigenparkeerpl_norm" ="Aanwezigheid eigenparkeerplek",
+                     "internetsnelheid_norm" = "Internetsnelheid",
+                     "wozwaarde_norm" = "WOZ waarde",
+                     "aantal_basisscholen_norm" = "Aantal basisscholen",
+                     "aantal_vmboschool_norm" ="Aantal vmbo scholen",
+                     "aantal_hav.vwoschool_norm" ="Aantal havo/vwo scholen",
+                     "aantal_bushaltes_norm" = "Aantal bushaltes",
+                     "aantal_tramhaltes_norm" ="Aantal tramhaltes",
+                     "aantal_metrostations_norm" ="Aantal metrostations",
+                     "veiligheidsindex_sub_norm" = "Veiligheidsindex subjectief",
+                     "veiligheidsindex_ob_norm" ="Veiligheidsindex objectief")
 
 ageBoxChoices <- c("Tot 15 jaar" = "leeftijd_tot15_norm",
                    "Tussen 15 en 65 jaar" = "leeftijd_15.65_norm",
