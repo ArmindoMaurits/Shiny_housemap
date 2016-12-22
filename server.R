@@ -6,13 +6,21 @@ source('global.R')
 
 shinyServer(function(input, output, session) {
   session$onSessionEnded(stopApp)
-
+  
+  observeEvent(input$yearSlider, {
+    if(input$yearSlider == 2014){
+      loadBuurten2014()
+    }else{
+      loadBuurten2016()
+    }
+  })
+  
   output$map <- renderLeaflet({
     map <<- leaflet(data = buurten)
     map <<- addTiles(map)
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
-
+    
     desiredColumns <- character()
     age <- input$age
     origin <- input$origin
@@ -42,7 +50,6 @@ shinyServer(function(input, output, session) {
 
     if(length(desiredColumns) > 0){
       plotBuurtenWithMultipleColumns(desiredColumns)
-      
     }
 
     for (buurt in buurten$buurtnaam) {
@@ -156,12 +163,12 @@ shinyServer(function(input, output, session) {
 
     map  # Show the map
   })
-
+  
   output$buurtenPlot <- renderPlot({
     barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
     grid(nx = 0, ny=NULL)
   })
-  
+
   #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.
   # observeEvent(c(input$noAction, input$studentAction, input$aloneAction, input$familyAction, input$retiredAction),{
   #   selectedTab <- switch (input$menu,

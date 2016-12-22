@@ -14,10 +14,10 @@ sidebar <- dashboardSidebar(
   sidebarMenu(id="menu",
               menuItem("Start", tabName = "startPage", icon = icon("home")),
               menuItem("Map", tabName = "mapPage", icon = icon("map")),
-              
               conditionalPanel(
                 condition = "input.menu == 'mapPage'",
                 sidebarMenu(
+                  sliderInput("yearSlider", "Jaar", min = 2014, max = 2016, step = 2, value = 2016, animate = F, sep = ""),
                   menuItem("Leeftijd",
                            checkboxGroupInput("age", NULL,
                                               choices = ageBoxChoices
