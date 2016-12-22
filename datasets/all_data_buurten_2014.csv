@@ -1,0 +1,77 @@
+cbs_buurtnummer;postcode;buurtnaam;wijknaam;wijknummer;leeftijd_tot15;leeftijd_15.65;leeftijd_van65;autochtoon;allochtoon_w;allochtoon_nw
+BU05990110;3011;Stadsdriehoek;Rotterdam Centrum;10;8%;81%;11%;56%;20%;24%
+BU05990111;3014;Oude Westen;Rotterdam Centrum;11;14%;72%;14%;29%;12%;60%
+BU05990112;3012;Cool;Rotterdam Centrum;12;8%;79%;14%;47%;18%;35%
+BU05990113;3013;CS-kwartier;Rotterdam Centrum;13;6%;86%;8%;38%;24%;38%
+BU05990117;3071;Kop van Zuid;Feijenoord;17;8%;88%;4%;45%;18%;37%
+BU05990118;3016;Nieuwe Werk;Rotterdam Centrum;3003;6%;83%;11%;58%;17%;25%
+BU05990119;3015;Dijkzigt;Rotterdam Centrum;3003;6%;83%;11%;58%;17%;25%
+BU05990320;3024;Delfshaven;Delfshaven;20;14%;79%;7%;38%;14%;48%
+BU05990321;3025;Bospolder;Delfshaven;21;19%;72%;10%;19%;10%;71%
+BU05990322;3026;Tussendijken;Delfshaven;22;18%;71%;12%;21%;13%;67%
+BU05990323;3027;Spangen;Delfshaven;23;21%;72%;7%;17%;10%;73%
+BU05990324;3023;Nieuwe Westen;Delfshaven;24;18%;74%;9%;30%;12%;58%
+BU05990325;3021;Middelland;Delfshaven;25;14%;78%;8%;40%;16%;44%
+BU05990327;3028;OudMathenesse/Witte Dorp;Delfshaven;3004;16%;73%;11%;35%;21%;44%
+BU05990329;3024;Schiemond;Delfshaven;29;19%;69%;12%;34%;11%;56%
+BU05990451;3042;Kleinpolder;Overschie;51;17%;64%;19%;47%;10%;43%
+BU05990452;3124;NoordKethel;Overschie;3006;23%;62%;16%;83%;7%;10%
+BU05990454;3046;Schieveen;Overschie;3006;23%;62%;16%;83%;7%;10%
+BU05990455;3045;Zestienhoven;Overschie;3006;23%;62%;16%;83%;7%;10%
+BU05990456;3043;Overschie;Overschie;56;17%;67%;16%;75%;10%;15%
+BU05990515;3032;Agniesebuurt;Noord;15;14%;75%;11%;32%;12%;56%
+BU05990516;3033;Provenierswijk;Noord;16;12%;77%;10%;43%;14%;44%
+BU05990531;3038;Bergpolder;Noord;31;11%;83%;7%;57%;15%;28%
+BU05990532;3039;Blijdorp;Noord;3011;13%;75%;13%;72%;15%;14%
+BU05990534;3037;Liskwartier;Noord;34;17%;71%;12%;53%;12%;36%
+BU05990535;3036;Oude Noorden;Noord;35;17%;73%;10%;34%;12%;54%
+BU05990558;3041;Blijdorpsepolder;Noord;3011;13%;75%;13%;72%;15%;14%
+BU05990660;3053;Schiebroek;Hillegersberg-Schiebroek;60;20%;62%;18%;63%;10%;27%
+BU05990661;3051;Hillegersberg-zuid;Hillegersberg-Schiebroek;61;19%;71%;11%;77%;13%;10%
+BU05990662;3054;Hillegersberg-noord;Hillegersberg-Schiebroek;62;17%;57%;26%;74%;13%;13%
+BU05990664;3056;Terbregge;Hillegersberg-Schiebroek;64;23%;68%;9%;74%;11%;15%
+BU05990665;3055;Molenlaankwartier;Hillegersberg-Schiebroek;65;23%;53%;24%;80%;14%;6%
+BU05990814;3031;Rubroek;Kralingen-Crooswijk;14;13%;72%;15%;47%;12%;41%
+BU05990836;3034;Nieuw Crooswijk;Kralingen-Crooswijk;36;15%;76%;10%;46%;11%;43%
+BU05990837;3034;Oud Crooswijk;Kralingen-Crooswijk;37;18%;68%;14%;33%;10%;58%
+BU05990841;3061;Kralingen-west;Kralingen-Crooswijk;41;15%;74%;12%;47%;13%;40%
+BU05990842;3062;Kralingen Oost;Kralingen-Crooswijk;3005;16%;69%;15%;67%;21%;12%
+BU05990843;3062;Kralingse Bos;Kralingen-Crooswijk;3005;16%;69%;15%;67%;21%;12%
+BU05990845;3063;De Esch;Kralingen-Crooswijk;45;10%;72%;17%;50%;13%;37%
+BU05990847;3063;Struisenburg;Kralingen-Crooswijk;47;5%;81%;14%;51%;28%;21%
+BU05991079;3071;Kop van Zuid-Entrepot;Feijenoord;79;19%;70%;11%;35%;13%;52%
+BU05991080;3075;Vreewijk;Feijenoord;80;15%;65%;20%;59%;10%;32%
+BU05991081;3073;Bloemhof;Feijenoord;81;19%;71%;10%;24%;11%;65%
+BU05991082;3074;Hillesluis;Feijenoord;82;20%;71%;8%;16%;10%;74%
+BU05991085;3072;Katendrecht;Feijenoord;85;22%;67%;11%;44%;10%;46%
+BU05991086;3072;Afrikaanderwijk;Feijenoord;86;19%;69%;12%;14%;6%;80%
+BU05991087;3071;Feijenoord;Feijenoord;87;21%;67%;12%;17%;7%;76%
+BU05991088;3071;Noordereiland;Feijenoord;88;12%;74%;15%;56%;15%;29%
+BU05991283;3077;Oud IJsselmonde;IJsselmonde;83;15%;72%;13%;64%;10%;26%
+BU05991284;3076;Lombardijen;IJsselmonde;84;18%;63%;19%;48%;10%;43%
+BU05991289;3078;Groot IJsselmonde-Noord;IJsselmonde;1009;16%;57%;27%;59%;9%;32%
+BU05991290;3078;Beverwaard;IJsselmonde;90;21%;70%;9%;43%;9%;48%
+BU05991391;3195;Pernis;Pernis;91;16%;65%;19%;83%;8%;9%
+BU05991444;3065;s-Gravenland;Prins Alexander;44;17%;70%;14%;69%;13%;18%
+BU05991446;3062;Kralingseveer;Prins Alexander;46;19%;70%;12%;82%;8%;11%
+BU05991448;3066;Prinsenland;Prins Alexander;48;13%;64%;23%;66%;10%;24%
+BU05991449;3067;Het Lage Land;Prins Alexander;49;13%;63%;24%;65%;11%;24%
+BU05991463;3068;Ommoord;Prins Alexander;63;13%;56%;31%;72%;10%;18%
+BU05991466;3068;Zevenkamp;Prins Alexander;66;17%;69%;14%;60%;9%;31%
+BU05991467;3067;Oosterflank;Prins Alexander;67;15%;66%;20%;57%;11%;33%
+BU05991468;3059;Nesselande;Prins Alexander;68;30%;62%;8%;72%;8%;20%
+BU05991571;3081;Tarwewijk;Charlois;71;20%;74%;6%;22%;19%;59%
+BU05991572;3083;Carnisse;Charlois;72;17%;75%;9%;37%;23%;40%
+BU05991573;3085;Zuidwijk;Charlois;73;17%;63%;20%;47%;10%;43%
+BU05991574;3082;Oud-Charlois;Charlois;74;18%;71%;11%;40%;16%;45%
+BU05991575;3084;Wielewaal;Charlois;75;14%;63%;23%;73%;9%;19%
+BU05991576;3083;Zuidplein;Charlois;76;11%;70%;20%;50%;14%;36%
+BU05991577;3086;Pendrecht;Charlois;77;21%;66%;13%;31%;12%;57%
+BU05991578;3084;Zuiderpark en Zuidrand;Charlois;78;6%;48%;46%;77%;10%;14%
+BU05991593;3089;Heijplaat;Charlois;93;13%;70%;17%;68%;10%;21%
+BU05991692;3193;Hoogvliet-noord;Hoogvliet;92;18%;69%;14%;54%;10%;37%
+BU05991699;3192;Hoogvliet-zuid;Hoogvliet;99;14%;63%;23%;71%;9%;20%
+BU05991701;3151;Strand en duin;Hoek van Holland;1;20%;65%;15%;90%;7%;3%
+BU05991702;3012;Dorp;Hoek van Holland;3001;14%;62%;25%;86%;8%;5%
+BU05991703;3151;Rijnpoort;Hoek van Holland;3001;14%;62%;25%;86%;8%;5%
+BU05992704;3181;Rozenburg;Rozenburg;4;16%;64%;20%;81%;10%;9%
