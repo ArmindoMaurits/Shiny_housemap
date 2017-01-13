@@ -11,7 +11,7 @@ infoIcon <- makeIcon(
   iconAnchorX = 15, iconAnchorY = 30
 )
 
-columnNames <- list("leeftijd_tot15_norm"="Tot 15 jaar",
+columnTitles <- list("leeftijd_tot15_norm"="Tot 15 jaar",
                      "leeftijd_15.65_norm"="Tussen 15 en 65 jaar",
                      "leeftijd_van65_norm"="Ouder dan 65 jaar",
                      "autochtoon_norm" = "Autochtoon",
