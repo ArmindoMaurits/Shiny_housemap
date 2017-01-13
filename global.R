@@ -1,9 +1,9 @@
 #global.R - Global defined variables.
 library(leaflet)
 
-colorPalette <<- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
-wijken <<- read.csv(paste(getwd(), "datasets/all_data_wijken.csv", sep="/"), sep = ";")
-buurten <<- read.csv(paste(getwd(), "datasets/all_data_buurten.csv", sep="/"), sep = ";")
+colorPalette <- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
+buurten2014 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2014.csv", sep="/"), sep = ";")
+buurten2016 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2016.csv", sep="/"), sep = ";")
 
 infoIcon <- makeIcon(
   iconUrl = "marker.png",
@@ -48,31 +48,36 @@ publicTransportBoxChoices <- c( "Aantal bushaltes" = "aantal_bushaltes_norm","Aa
 safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "veiligheidsindex_sub_norm", "Veiligheidsindex objectief" ="veiligheidsindex_ob_norm")
 
 #normalize given column, merge this to the buurten dataset and write a new CSV.
-scaleColumnAndMergeToBuurten <- function(columnName){
+scaleColumnAndMergeToBuurten <- function(columnName, datasetYear){
   normalizedColumnName <- paste(columnName, "_norm", sep="")
   tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten[[columnName]]))
   colnames(tempDataFrame) <- c("cbs_buurtnummer", normalizedColumnName)
   buurten <<- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
-  writeBuurtenCSV()
-}
-
-writeBuurtenCSV <- function(){
-  write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten.csv", sep=""), row.names = F)
-}
-
-addGeoJsonByNumberAndCategory <- function(nummer, category){
-  if(category == "wijken"){
-    folderLocation <- paste(getwd(), "/geojsons/wijken/", sep = "")  
+  
+  if(datasetYear == 2014){
+    writeBuurten2014CSV()
   }else{
-    folderLocation <- paste(getwd(), "/geojsons/buurten/", sep = "")
+    writeBuurten2016CSV()
   }
   
-  fileName <- paste(nummer, ".json", sep="")
-  fileLocation <-paste(folderLocation, fileName, sep="")
-  json <- readLines(fileLocation) %>% paste(collapse = "\n")
-  
-  return(json)
 }
+
+writeBuurten2014CSV <- function(){
+  write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2014.csv", sep=""), row.names = F)
+}
+
+writeBuurten2016CSV <- function(){
+  write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2016.csv", sep=""), row.names = F)
+}
+
+loadBuurten2014 <- function(){
+  buurten <<- buurten2014
+}
+
+loadBuurten2016 <- function(){
+  buurten <<- buurten2016
+}
+
 
 resetCheckboxes <- function(session){
   updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
@@ -100,6 +105,19 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
+plotBuurtenWithMultipleColumns <- function(desiredColumns){
+  wd <- getwd()
+  calculateMultipleColumns(desiredColumns)
+  
+  for(buurtNummer in buurten$cbs_buurtnummer){
+    buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
+    fileName <- paste(buurtNummer, ".json", sep="")
+    json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
+    
+    map <<- addGeoJSON(map, json, weight = 2, color = 'gray', fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
+  }
+}
+
 calculateMultipleColumns <- function(desiredColumns){
   iterator <- 1
   
@@ -114,54 +132,4 @@ calculateMultipleColumns <- function(desiredColumns){
   
   tempDataFrame[, "sum"] <<- rowSums(tempDataFrame)
   tempDataFrame[, "total"] <<- round((tempDataFrame$sum / (ncol(tempDataFrame)-1)))
-}
-
-#Delfshaven - http://thesaurus.erfgeo.nl/pit/?id=gemeentegeschiedenis-geometries/Delfshaven-1812
-addGeoJsonFromDatasetToMap<- function(datasetName, columnName){
-  wd <- getwd()
-  
-  if(datasetName == "wijken"){
-    for(wijknummer in wijken$cbs_wijknummer){
-      wijkenFolder <- paste(wd, "/geojsons/wijken/", sep = "")
-      fileName <- paste(wijknummer, ".json", sep="")
-      
-      json <- readLines(paste(wijkenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-      
-      map <<- addGeoJSON(map, json, weight = 2, color = "#000", fill = T)
-    }
-  }else{
-    
-    for(buurtNummer in buurten$cbs_buurtnummer){
-      buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
-      fileName <- paste(buurtNummer, ".json", sep="")
-      
-      json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-      map <<- addGeoJSON(map, json, weight = 2, color = colorPalette[buurten$veiligheidsindex_sub_norm[buurten$cbs_buurtnummer == buurtNummer]+1], fillColor =  colorPalette[buurten$veiligheidsindex_sub_norm[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
-    }
-  }
-}
-
-#Plots all buurten with the colour of a given column from the buurten data.frame
-plotBuurtenWithColumn <- function(column){
-  wd <- getwd()
-  
-  for(buurtNummer in buurten$cbs_buurtnummer){
-    buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
-    fileName <- paste(buurtNummer, ".json", sep="")
-    json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-    map <<- addGeoJSON(map, json, weight = 2, color = "grey", fillColor =  colorPalette[column[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
-  }
-}
-
-plotBuurtenWithMultipleColumns <- function(desiredColumns){
-  wd <- getwd()
-  calculateMultipleColumns(desiredColumns)
-  
-  for(buurtNummer in buurten$cbs_buurtnummer){
-    buurtenFolder <- paste(wd, "/geojsons/buurten/", sep = "")
-    fileName <- paste(buurtNummer, ".json", sep="")
-    json <- readLines(paste(buurtenFolder, fileName, sep="")) %>% paste(collapse = "\n")
-    
-    map <<- addGeoJSON(map, json, weight = 2, color = 'gray', fillColor =  colorPalette[tempDataFrame$total[buurten$cbs_buurtnummer == buurtNummer]+1] , fill = T, stroke=T,opacity = 1, fillOpacity=0.75)
-  }
 }
