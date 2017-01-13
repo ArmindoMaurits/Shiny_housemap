@@ -48,13 +48,22 @@ publicTransportBoxChoices <- c( "Aantal bushaltes" = "aantal_bushaltes_norm","Aa
 safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "veiligheidsindex_sub_norm", "Veiligheidsindex objectief" ="veiligheidsindex_ob_norm")
 
 #normalize given column, merge this to the buurten dataset and write a new CSV.
-scaleColumnAndMergeToBuurten <- function(columnName, datasetYear){
+#columnName = Name of the column that has to be scaled.
+#loadFromDatasetYear = The year from which dataset the column has to be loaded
+#writeToDatasetYear = The year to which dataset the column has to be written
+scaleColumnAndMergeToBuurten <- function(columnName, loadFromDatasetYear, writeToDatasetYear){
+  if(loadFromDatasetYear == 2014){
+    loadBuurten2014()
+  }else{
+    loadBuurten2016()
+  }
+  
   normalizedColumnName <- paste(columnName, "_norm", sep="")
   tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten[[columnName]]))
   colnames(tempDataFrame) <- c("cbs_buurtnummer", normalizedColumnName)
   buurten <<- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
   
-  if(datasetYear == 2014){
+  if(writeToDatasetYear == 2014){
     writeBuurten2014CSV()
   }else{
     writeBuurten2016CSV()
@@ -77,7 +86,6 @@ loadBuurten2014 <- function(){
 loadBuurten2016 <- function(){
   buurten <<- buurten2016
 }
-
 
 resetCheckboxes <- function(session){
   updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
@@ -133,3 +141,6 @@ calculateMultipleColumns <- function(desiredColumns){
   tempDataFrame[, "sum"] <<- rowSums(tempDataFrame)
   tempDataFrame[, "total"] <<- round((tempDataFrame$sum / (ncol(tempDataFrame)-1)))
 }
+
+
+#scaleColumnAndMergeToBuurten("internetsnelheid", 2014, 2016)

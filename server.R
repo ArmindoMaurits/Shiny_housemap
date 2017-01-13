@@ -73,7 +73,8 @@ shinyServer(function(input, output, session) {
                               </tr>', columns,
                             '</table>
                           </div>')
-        # vul content en addmarker
+        
+        # vul content en addmarkers
         map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], layerId=buurt, popup = content, icon = infoIcon)
       }
     }
@@ -85,17 +86,6 @@ shinyServer(function(input, output, session) {
     barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
     grid(nx = 0, ny=NULL)
   })
-
-  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie.
-  # observeEvent(c(input$noAction, input$studentAction, input$aloneAction, input$familyAction, input$retiredAction),{
-  #   selectedTab <- switch (input$menu,
-  #                          "startPage" = "mapPage")
-  #   
-  #   #TODO: Fix this function with the correct parameters.
-  #   updateAllCheckboxInputGroups()
-  #   updateTabItems(session,inputId = "menu", selected = selectedTab)
-  # })
-  
   
   #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie en het aanvinken van de pre-set checkboxes. 
   observeEvent(input$studentAction,{
@@ -103,9 +93,9 @@ shinyServer(function(input, output, session) {
                            "startPage" = "mapPage")
     
     resetCheckboxes(session)
-    
-    #updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices, 
-    #                         selected = c("leeftijd_15.65"), inline = FALSE)
+
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices,
+                            selected = c("leeftijd_15.65"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices, 
                              selected = c("veiligheidsindex_ob_norm"), inline = FALSE)
@@ -124,8 +114,8 @@ shinyServer(function(input, output, session) {
                            "startPage" = "mapPage")
     resetCheckboxes(session)
     
-    #updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
-    #                         , selected = c("leeftijd_van65"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+                            , selected = c("leeftijd_van65"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
                              , selected = c("veiligheidsindex_sub_norm", "veiligheidsindex_ob_norm"), inline = FALSE)
@@ -145,8 +135,8 @@ shinyServer(function(input, output, session) {
     
     resetCheckboxes(session)
     
-    #updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
-    #                         , selected = c("leeftijd_15", "leeftijd_tot15"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+                            , selected = c("leeftijd_15", "leeftijd_tot15"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
                              , selected = c("veiligheidsindex_ob_norm"), inline = FALSE)
@@ -164,8 +154,8 @@ shinyServer(function(input, output, session) {
     
     resetCheckboxes(session)
     
-    #updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
-    #, selected = c("leeftijd_15.65", "leeftijd_tot15"), inline = FALSE)
+    updateCheckboxGroupInput(session, "age", label = "Leeftijd", choices = ageBoxChoices
+    , selected = c("leeftijd_15.65", "leeftijd_tot15"), inline = FALSE)
     
     updateCheckboxGroupInput(session, "safetyIndex", label = "Veiligheidsindex", choices = safetyIndexBoxChoices
     , selected = c("veiligheidsindex_ob_norm"), inline = FALSE)
@@ -182,9 +172,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$noAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
-    
     resetCheckboxes(session)
-    
     
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
