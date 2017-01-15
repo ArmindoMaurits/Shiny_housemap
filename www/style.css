@@ -24,3 +24,19 @@ tr:nth-child(even) {
 span.irs-grid-pol.small{
   background : none;
 }
+
+#resetCheckboxesButton{
+  float:right;
+  margin-right: 30px;
+}
+
+#aloneAction, #studentAction, #familyAction, #retiredAction, #noAction{
+  bottom:0px;
+  left:0px;
+  position: absolute;
+  margin:10px;
+}
+
+.box-body{
+  height:225px;
+}

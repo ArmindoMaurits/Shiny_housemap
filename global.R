@@ -2,8 +2,8 @@
 library(leaflet)
 
 colorPalette <- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
-buurten2014 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2014.csv", sep="/"), sep = ";")
-buurten2016 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2016.csv", sep="/"), sep = ";")
+buurten2014 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2014.csv", sep="/"), sep = ",")
+buurten2016 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2016.csv", sep="/"), sep = ",")
 
 infoIcon <- makeIcon(
   iconUrl = "marker.png",
@@ -61,29 +61,35 @@ scaleColumnAndMergeToBuurten <- function(columnName, loadFromDatasetYear, writeT
   normalizedColumnName <- paste(columnName, "_norm", sep="")
   tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten[[columnName]]))
   colnames(tempDataFrame) <- c("cbs_buurtnummer", normalizedColumnName)
-  buurten <<- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
+  #buurten <<- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
+  buurten[[normalizedColumnName]] <- tempDataFrame[[normalizedColumnName]]
   
-  if(writeToDatasetYear == 2014){
-    writeBuurten2014CSV()
-  }else{
-    writeBuurten2016CSV()
-  }
-  
+  writeDatasetToCSV(buurten, writeToDatasetYear)
 }
 
 writeBuurten2014CSV <- function(){
-  write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2014.csv", sep=""), row.names = F)
+  write.csv(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2014.csv", sep=""), row.names = F)
+}
+
+writeDatasetToCSV <- function(data, year){
+  fileName <- paste("datasets/all_data_buurten_", year, sep="")
+  fileName <- paste(fileName, ".csv", sep="")
+  fullPath <- paste(getwd(), fileName, sep="/")
+  print(fullPath)
+  write.csv(data, file = fullPath, row.names = F)
 }
 
 writeBuurten2016CSV <- function(){
-  write.csv2(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2016.csv", sep=""), row.names = F)
+  write.csv(buurten, file = paste(getwd(), "/datasets/all_data_buurten_2016.csv", sep=""), row.names = F)
 }
 
 loadBuurten2014 <- function(){
+  buurten2014 <<- read.csv(paste(getwd(), "datasets/all_data_buurten_2014.csv", sep="/"), sep = ",")
   buurten <<- buurten2014
 }
 
 loadBuurten2016 <- function(){
+  buurten2016 <<- read.csv(paste(getwd(), "datasets/all_data_buurten_2016.csv", sep="/"), sep = ",")
   buurten <<- buurten2016
 }
 
@@ -126,6 +132,35 @@ plotBuurtenWithMultipleColumns <- function(desiredColumns){
   }
 }
 
+addMarkersToMap <- function(desiredColumns){
+  # Plaats een infowindow in de center van iedere buurt
+  # In iedere infowindow een tabel met de aangevinte kolommen en hun waardes
+  for (buurt in buurten$buurtnaam) {
+    columns <- ''
+    
+    for (column in desiredColumns) {
+      columnName <- as.character(strsplit(column, "_norm"))
+      columns <- paste0(columns, '<tr>
+                            <td>',columnTitles[column],'</td>
+                            <td>', buurten[[columnName]][buurten$buurtnaam == buurt],'</td>
+                            </tr>')
+    }
+    
+    content <- paste0('<div style="width: 250px;">
+                            <h4>', buurt,' - ',buurten$wijknaam[buurten$buurtnaam == buurt],'</h4>
+                            <table style="width:100%">
+                              <tr>
+                                <th>Onderwerp</th>
+                                <th>Meting</th>
+                              </tr>', columns,
+                      '</table>
+                          </div>')
+    
+    # vul content en addmarkers
+    map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], layerId=buurt, popup = content, icon = infoIcon)
+  }
+}
+
 calculateMultipleColumns <- function(desiredColumns){
   iterator <- 1
   
@@ -142,5 +177,15 @@ calculateMultipleColumns <- function(desiredColumns){
   tempDataFrame[, "total"] <<- round((tempDataFrame$sum / (ncol(tempDataFrame)-1)))
 }
 
-
-#scaleColumnAndMergeToBuurten("internetsnelheid", 2014, 2016)
+normalizeNAColumnsIn2014Dataset <- function(){
+  for(columnName in names(buurten2014)){
+    column <- buurten2014[columnName]
+    columnDataName <- substr(columnName ,1, nchar(columnName)-5)
+    
+    if(all(is.na(column))){
+      columnData <- buurten2014[columnDataName]
+      
+      scaleColumnAndMergeToBuurten(columnDataName, 2014, 2014)
+    }
+  }
+}

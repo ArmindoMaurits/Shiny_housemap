@@ -13,6 +13,15 @@ shinyServer(function(input, output, session) {
     }else{
       loadBuurten2016()
     }
+    
+    resetCheckboxes(session)
+    desiredColumns <- getDesiredColumns()
+    
+    if(length(desiredColumns) > 0){
+      plotBuurtenWithMultipleColumns(desiredColumns)
+      addMarkersToMap(desiredColumns)
+    }
+    
   })
   
   output$map <- renderLeaflet({
@@ -21,6 +30,17 @@ shinyServer(function(input, output, session) {
     map <<- setView(map, 4.477733, 51.92442, zoom = 12)
     map <<- addLegend(map, "bottomright", colors = rev(colorPalette), labels = 10:0,opacity = 1, title = "Totaalscore")
     
+    desiredColumns <- getDesiredColumns()
+    
+    if(length(desiredColumns) > 0){
+      plotBuurtenWithMultipleColumns(desiredColumns)
+      addMarkersToMap(desiredColumns)
+    }
+
+    map  # Show the map
+  })
+  
+  getDesiredColumns <- function(){
     desiredColumns <- character()
     age <- input$age
     origin <- input$origin
@@ -47,45 +67,9 @@ shinyServer(function(input, output, session) {
     if(!is.null(safetyIndex)){
       desiredColumns <- append(desiredColumns, safetyIndex)
     }
-
-    if(length(desiredColumns) > 0){
-      plotBuurtenWithMultipleColumns(desiredColumns)
-
-      # Plaats een infowindow in de center van iedere buurt
-      # In iedere infowindow een tabel met de aangevinte kolommen en hun waardes
-      for (buurt in buurten$buurtnaam) {
-        columns <- ''
-        
-        for (column in desiredColumns) {
-          columnName <- as.character(strsplit(column, "_norm"))
-          columns <- paste0(columns, '<tr>
-                            <td>',columnTitles[column],'</td>
-                            <td>', buurten[[columnName]][buurten$buurtnaam == buurt],'</td>
-                            </tr>')
-        }
-
-        content <- paste0('<div style="width: 250px;">
-                            <h4>', buurt,' - ',buurten$wijknaam[buurten$buurtnaam == buurt],'</h4>
-                            <table style="width:100%">
-                              <tr>
-                                <th>Onderwerp</th>
-                                <th>Meting</th>
-                              </tr>', columns,
-                            '</table>
-                          </div>')
-        
-        # vul content en addmarkers
-        map <<- addMarkers(map, lng=buurten$long[buurten$buurtnaam == buurt], lat=buurten$lat[buurten$buurtnaam == buurt], layerId=buurt, popup = content, icon = infoIcon)
-      }
-    }
-
-    map  # Show the map
-  })
-  
-  output$buurtenPlot <- renderPlot({
-    barplot(buurten$veiligheidsindex_sub_norm, names=buurten$buurtnaam, las=2, col=colorPalette[buurten$veiligheidsindex_sub_norm+1], main="Veiligheidsindex per buurt", ylab="veiligheidsindex")
-    grid(nx = 0, ny=NULL)
-  })
+    
+    return(desiredColumns)
+  }
   
   #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie en het aanvinken van de pre-set checkboxes. 
   observeEvent(input$studentAction,{
@@ -170,6 +154,14 @@ shinyServer(function(input, output, session) {
   })    
   
   observeEvent(input$noAction,{
+    selectedTab <- switch (input$menu,
+                           "startPage" = "mapPage")
+    resetCheckboxes(session)
+    
+    updateTabItems(session,inputId = "menu", selected = selectedTab)
+  })
+  
+  observeEvent(input$resetCheckboxesButton,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
     resetCheckboxes(session)
