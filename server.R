@@ -2,11 +2,14 @@ library(shiny)
 library(shinydashboard)
 library(leaflet)
 
+# Load up the global R so the variables are loaded
 source('global.R')
 
 shinyServer(function(input, output, session) {
   session$onSessionEnded(stopApp)
   
+  # Observe the slider input for changing the years.
+  # Load the selected year and plot the new information on the map
   observeEvent(input$yearSlider, {
     if(input$yearSlider == 2014){
       loadBuurten2014()
@@ -16,7 +19,7 @@ shinyServer(function(input, output, session) {
     
     resetCheckboxes(session)
     desiredColumns <- getDesiredColumns()
-    
+
     if(length(desiredColumns) > 0){
       plotBuurtenWithMultipleColumns(desiredColumns)
       addMarkersToMap(desiredColumns)
@@ -24,6 +27,8 @@ shinyServer(function(input, output, session) {
     
   })
   
+  # Initialise the leaflet map in the map output element
+  # Check which columns are selected, normalise and plot them on the leaflet map
   output$map <- renderLeaflet({
     map <<- leaflet(data = buurten)
     map <<- addTiles(map)
@@ -40,6 +45,7 @@ shinyServer(function(input, output, session) {
     map  # Show the map
   })
   
+  # This function returns all the selected filters/columns
   getDesiredColumns <- function(){
     desiredColumns <- character()
     age <- input$age
@@ -70,8 +76,8 @@ shinyServer(function(input, output, session) {
     
     return(desiredColumns)
   }
-  
-  #onderstaande observeevents zorgen voor het schakelen tussen de pagina's na profiel selectie en het aanvinken van de pre-set checkboxes. 
+
+  # These observe events take care of the ability to switch between tabs after the profile selection and update the checkboxes.
   observeEvent(input$studentAction,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")
@@ -161,6 +167,7 @@ shinyServer(function(input, output, session) {
     updateTabItems(session,inputId = "menu", selected = selectedTab)
   })
   
+  # This function resets all filters
   observeEvent(input$resetCheckboxesButton,{
     selectedTab <- switch (input$menu,
                            "startPage" = "mapPage")

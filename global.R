@@ -1,6 +1,7 @@
 #global.R - Global defined variables.
 library(leaflet)
-
+ 
+# Colorpalette used in the legenda
 colorPalette <- c('#a50026','#d73027','#f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837')
 buurten2014 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2014.csv", sep="/"), sep = ",")
 buurten2016 <- read.csv(paste(getwd(), "datasets/all_data_buurten_2016.csv", sep="/"), sep = ",")
@@ -11,6 +12,7 @@ infoIcon <- makeIcon(
   iconAnchorX = 15, iconAnchorY = 30
 )
 
+# Column titles shown in the infowindow, this link the selected column tot the right title
 columnTitles <- list("leeftijd_tot15_norm"="Tot 15 jaar",
                      "leeftijd_15.65_norm"="Tussen 15 en 65 jaar",
                      "leeftijd_van65_norm"="Ouder dan 65 jaar",
@@ -31,20 +33,16 @@ columnTitles <- list("leeftijd_tot15_norm"="Tot 15 jaar",
                      "veiligheidsindex_sub_norm" = "Veiligheidsindex subjectief",
                      "veiligheidsindex_ob_norm" ="Veiligheidsindex objectief")
 
+# Sets the choices for each checkbox, corresponds tot the column names from the dataset
 ageBoxChoices <- c("Tot 15 jaar" = "leeftijd_tot15_norm",
                    "Tussen 15 en 65 jaar" = "leeftijd_15.65_norm",
                    "Ouder dan 65 jaar" = "leeftijd_van65_norm")
-
 originBoxChoices <- c("Autochtoon" = "autochtoon_norm", "Allochtoon" ="allochtoon_w_norm")
-
 servicesBoxChoices <- c("Binnensport" = "aanwezigheid_binnensport_norm","Sportvelden" ="aanwezigheid_sportveld_norm",
                         "Parkeergelegenheid" ="aanwezigheid_parkeergelegenheid_norm","Eigen parkeerplekken" ="aanwezigheid_eigenparkeerpl_norm", "Internetsnelheid" = "internetsnelheid_norm", "WOZ waarde" = "wozwaarde_norm")
-
 schoolBoxChoices <- c("Basisscholen" = "aantal_basisscholen_norm", "VMBO-scholen" ="aantal_vmboschool_norm","HAVO/VWO-scholen" ="aantal_hav.vwoschool_norm")
-
 publicTransportBoxChoices <- c( "Aantal bushaltes" = "aantal_bushaltes_norm","Aantal tramhaltes" ="aantal_tramhaltes_norm",
                                 "Aantal metrostations" ="aantal_metrostations_norm")
-
 safetyIndexBoxChoices <- c("Veiligheidsindex subjectief" = "veiligheidsindex_sub_norm", "Veiligheidsindex objectief" ="veiligheidsindex_ob_norm")
 
 #normalize given column, merge this to the buurten dataset and write a new CSV.
@@ -61,7 +59,6 @@ scaleColumnAndMergeToBuurten <- function(columnName, loadFromDatasetYear, writeT
   normalizedColumnName <- paste(columnName, "_norm", sep="")
   tempDataFrame <- data.frame(buurten$cbs_buurtnummer, normalizeColumn(buurten[[columnName]]))
   colnames(tempDataFrame) <- c("cbs_buurtnummer", normalizedColumnName)
-  #buurten <<- merge(buurten, tempDataFrame, by.y = "cbs_buurtnummer")
   buurten[[normalizedColumnName]] <- tempDataFrame[[normalizedColumnName]]
   
   writeDatasetToCSV(buurten, writeToDatasetYear)
@@ -119,6 +116,8 @@ normalizeColumn <- function(column) {
   scaled <- round(rescale(column)*10)
 }
 
+# Plot the selected columns with the GeoJSON function from leaflet,
+# Give each contour a background color corresponding to the normalised columns value
 plotBuurtenWithMultipleColumns <- function(desiredColumns){
   wd <- getwd()
   calculateMultipleColumns(desiredColumns)
@@ -132,9 +131,9 @@ plotBuurtenWithMultipleColumns <- function(desiredColumns){
   }
 }
 
+# Add markers for each neighbourhood to the map
+# Fill the infowindow with raw values from the selected columns inside a table
 addMarkersToMap <- function(desiredColumns){
-  # Plaats een infowindow in de center van iedere buurt
-  # In iedere infowindow een tabel met de aangevinte kolommen en hun waardes
   for (buurt in buurten$buurtnaam) {
     columns <- ''
     
