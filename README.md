@@ -1,5 +1,5 @@
 # Neighbourhood quality map
-This project was build for a Data Science (IT) Minor course for the Hogeschool Rotterdam, build by 3 graduating students with various backgrounds. The goal of the project was to make a neighbourhood quality map based on publically available Open/Big Data, where users can see the quality of their neighbourhood based on some numbers. 
+This project was build for a Data Science (IT) Minor course for the Hogeschool Rotterdam, built by 3 graduating students with various studies and personal backgrounds. The goal of this project was to make a neighbourhood quality map based on publically available Open/Big Data, where users can see the quality of their neighbourhood based on neighbourhood statistics. 
 
 First concept design
 ![Concept idea](https://drive.google.com/uc?export=download&id=0B-nqiYFaJ3yOUWQ0dDB1UGV3TGc)
